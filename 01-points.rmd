@@ -1,0 +1,88 @@
+---
+title: "1. Points - Points of points"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+Points. Geographically speaking, a point is a specific location on a map - usually defined
+by a pair of co-ordinates. Points are also mechanical switches that enable trains to move from one set of
+tracks to another.
+
+![](images/2218837318_1d29a7f419_w.jpg "Points")
+
+So for this map we're going to build a simple map of points (geographical) where you might
+find points (railway).
+
+### Data
+
+For this map we're going to take a copy of a dataset provided by National Rail
+containing the locations of Timing Point Locations (TIPLOCs).
+
+TIPLOs are places on the railway network used for timetable scheduling. These
+might be stations, depots, siding, signals etc, but we can use them as proxies
+for places where you might find points.
+
+The data comes as simple Excel file containing the name and coordinates of each
+TIPLOC.
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+
+# Let's load the sf and mapview libraries to process and view geospatial data
+library(readxl)
+library(sf)
+library(mapview)
+
+# We can load the CSV file containing the TIPLOC data straight from the CSV file
+# using R's standard read functionality. This will give us a data frame to access
+# the TIPLOC data with.
+
+tiplocs <- read_excel('./data/01/TIPLOC_Eastings_and_Northings.xlsx')
+
+# Next we need to convert this to a spatial format. Spatial data has special
+# properties - namely coordinates and a spatial (or coordinate) reference 
+# system (CRS). A CRS describes the function that's used to map co-ordinates
+# on a sphere (the earth) to those on a flat plane (paper or a computer screen).
+#
+# The TIPLOC csv contains coordinates stored in the EASTING and NORTHING fields
+# and these are in the GB Ordnance Survey co-ordinate system - shorthand for this
+# is EPSG:27700 or 27700
+tiplocSpatial <- st_as_sf(tiplocs, coords = c("EASTING", "NORTHING"), 
+                                   crs = 27700)
+
+```
+
+### The Map
+
+And here we have it - a map with points where you might find some points!
+```{r map, results='show'}
+# Here we use mapview to display the map using the leaflet library.
+# Because tiplocSpatial is an sf object rather than a plain datatable
+# leaflet understands how to interpret the coordinates and reference system
+# to display the points in the correct location on the map.
+mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
+               layers.control.pos = "topright",
+               leafletWidth = "100%",
+               legend = FALSE
+               )
+mapview(tiplocSpatial, label="NAME")
+```
+
+
+### Credits
+
+Data: _TIPLOC data from National Rail licensed under OGL3, sourced from https://wiki.openraildata.com/index.php/Identifying_Locations_
+
+Image: _"Dockland Light railway points and crossing01" by Elsie esq. is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/?ref=openverse._

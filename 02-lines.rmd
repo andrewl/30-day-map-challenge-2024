@@ -1,0 +1,130 @@
+---
+title: "2. Lines - The Kirk/Church line"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> This is a map made for [#30DayMapChallenge 2024](https://30daymapchallenge.com/).<br/>
+> Just here for [The Map]?<br/>
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+Lines. Lines can be boundaries - they can show us where one thing stops and another
+starts. 
+
+If you travel the length of the UK, from North to South, you might notice
+something about placenames - the word Kirk is replaced by the word Church.
+
+![](images/2218837318_1d29a7f419_w.jpg "Points")
+
+For today's map we're going to use the power of data science to find out where
+Kirk become Church!
+
+### Data
+
+For this map we'll use OpenNames - a dataset containing named places provided by
+the Ordnance Survey. You can get the data as a GeoPackage from [OS Data Hub](https://osdatahub.os.uk/downloads/open/OpenNames)
+
+Let's read in the places from the geopackage, pulling out all the towns, villages
+etc where the name starts or ends with 'church' or 'kirk' and display them on
+a map...
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library('sf')
+library('raster')
+library('mapview')
+library('terra')
+
+# We can use the st_read function from the sf library to read in the data from the geopackage
+# and limit it to populated places where the name starts or ends with 'church' or 'kirk'
+# using a simple SQL query-like syntax
+churchAndKirk <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1 as placeName from named_place where type = "populatedPlace" and (name1 like "kirk%" or name1 like "%kirk" or name1 like "church%" or name1 like "%church")')
+
+# Next we'll create a new field called 'nameType' and fill this with either 'Church' or 'Kirk'
+# depending on the placename
+churchAndKirk$nameType <- ifelse((startsWith(churchAndKirk$placeName,"Church") | endsWith(churchAndKirk$placeName,"hurch")), "Church", "Kirk")
+
+mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
+               layers.control.pos = "topright",
+               leafletWidth = "100%",
+               legend = TRUE
+               )
+
+mapview(churchAndKirk, zcol = c("nameType"), layer.name="Placename type", label = "placeName") 
+```
+
+
+### Density maps
+
+So we can see some patterning there, but point maps like this can make it
+challenging to discern patterns or identify areas of high or low density. 
+
+Density maps mitigate this issue by aggregating data into continuous regions,
+reducing visual clutter. We can create a density map showing which areas are
+are mostly 'Kirk' and which are mostly 'Church'
+```{r rasterize, results='show'}
+# First we'll create a raster 'template' that extends to the bounds of our churchAndKirk
+# data frames. This splits the area into 40km x 40km squares and initialises it with zeros.
+rasterTemplate = rast(ext(churchAndKirk), resolution = 40000,
+                       crs = st_crs(churchAndKirk)$wkt, vals=0)
+
+# Next we'll create two rasters - one where the value of each cell is the number of 'Kirk' places,
+# one where it's the number of 'Church' places in each square.
+kirkRaster = rasterize(subset(churchAndKirk, nameType == "Kirk"), rasterTemplate, fun="length")
+kirkRaster <- classify(kirkRaster, cbind(NA, 0))
+
+churchRaster = rasterize(subset(churchAndKirk, nameType == "Church"), rasterTemplate, fun="length")
+churchRaster <- classify(churchRaster, cbind(NA, 0))
+
+# Finally we'll combine these two rasters into a single raster - the value of each cell will be
+# based on whichever contains the most Churches or Kirks. If there are more Churches than Kirks
+# we'll assign it a value of 1, if there are more Kirks than Churches we'll assign it a value of 2.
+nameType <- ifel((churchRaster > kirkRaster), 1,
+            ifel((churchRaster < kirkRaster), 2, NA))
+
+# We'll also set the names of the levels to 'Mostly Churches' and 'Mostly Kirks'
+levels(nameType) = data.frame(value = c(1,2), name = c("Mostly Churches", "Mostly Kirks"))
+
+densityMap = mapview(nameType,na.color="transparent",layer.name="Placenames")
+densityMap
+```
+
+### A little bit of history
+
+So we can see a little more clearly where the 'Church' and 'Kirk' placenames are. And if 
+we look at the map we can see that there's a bit of a divide between the two. If you know
+a bit about the history of the UK, you might know that there was a time when the country
+was divided into two parts - the Danelaw and the Saxon Kingdoms.
+
+The Danelaw represented areas where Danish (ie "Viking") legal systems were enforced, often
+in contrast to Anglo-Saxon laws of the time. Despite its dissolution, the Danelaw left a
+lasting impact on the UK particularly in terms of language, culture, and place names. Many
+English towns and cities in the Danelaw area still bear names of Scandinavian origin,
+reflecting the significant influence of the Vikings on the region.
+
+I've created a [geopackage]() at https://github.com/andrewl/danelaw that contains the 
+boundary of the Danelaw - let's overlay this on our map to see if there's any correlation
+
+
+### The Map
+
+And here we have it - a map showing the line between churches and kirks.
+```{r map}
+DanelawBoundary <- st_read('./data/02/danelaw.gpkg', quiet = TRUE)
+
+densityMap + mapview(DanelawBoundary, lwd = 6)
+```
+
+### Credits
+
+Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+
+Image: _"Dockland Light railway points and crossing01" by Elsie esq. is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/?ref=openverse._
+

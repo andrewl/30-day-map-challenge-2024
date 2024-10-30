@@ -1,0 +1,60 @@
+p img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;	
+}
+
+p {
+	font-size: 16px;
+}
+
+a {
+	color: #3d348b
+}
+
+blockquote {
+	border-left: 0.1em solid #f7b801;
+}
+
+blockquote p {
+	font-size: 14px;
+	font-style: italic;
+}
+
+div.leaf {
+	margin-bottom: 4em;
+}
+
+div#credits p {
+	font-size: 14px;
+}
+
+div#credits h3 {
+	margin-top: 3em;
+}
+
+div#menu {
+  display: flex;
+  border-bottom: 0.1em solid #f7b801;
+  font-size: 26px;
+  font-weight: bold;
+  padding-top: 1em;
+  padding-left: 0.5em;
+  justify-content: space-between;
+}
+
+div#menu #links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+div#footer {
+	border-top: 0.5em solid #f7b801;
+}

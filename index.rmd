@@ -1,0 +1,77 @@
+---
+title: "Andrew's 30 Day Map Challenge"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
+
+[Day 1 - Points]
+
+[Day 2 - Lines]
+
+[Day 3 - Polygons]
+
+[Day 4 - Hexagons]
+
+[Day 5 - A journey]
+
+[Day 6 - Raster]
+
+[Day 7 - Vintage style]
+
+[Day 8 - HDX]
+
+[Day 9 - AI only]
+
+[Day 10 - Pen & paper]
+
+[Day 11 - Arctic]
+
+[Day 12 - Time and space]
+
+[Day 13 - A new tool]
+
+[Day 14 - A world map]
+
+[Day 15 - My data]
+
+[Day 16 - Choropleth]
+
+[Day 17 - Collaborative map]
+
+[Day 18 - 3D]
+
+[Day 19 - Typography]
+
+[Day 20 - OpenStreetMap]
+
+[Day 21 - Conflict]
+
+[Day 22 - 2 colours]
+
+[Day 23 - Memory]
+
+[Day 24 - Only circular shapes]
+
+[Day 25 - Heat]
+
+[Day 26 - Map projections]
+
+[Day 27 - Micromapping]
+
+[Day 28 - The blue planet]
+
+[Day 29 - Overture]
+
+[Day 30 - The final map]

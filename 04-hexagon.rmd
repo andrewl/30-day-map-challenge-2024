@@ -1,0 +1,163 @@
+---
+title: "4. Hexagons: How Uber sees the world"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> This is a map made for [#30DayMapChallenge 2024](https://30daymapchallenge.com/).<br/>
+> Just here for [The Map]?<br/>
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+Uber have devised a grid system for the world, using hexagons, called h3. Comprised of a number of layers, the hexagons at each
+layer are of different sizes (so the more you zoom in, the smaller the hexagons get). Given a location and a layer, you can
+find the hexagon that contains that location.
+
+Why hexagons?
+- They tessellate (fit together without gaps)
+- Unlike squares or triangles they tessalate on edges rather than corners
+- This means you can add properties to the edges of the hexagons to indicate things like how 'expensive' it to move between two hexagons
+- This also means the distance between the centre of a hexagon and the centre of its neighbours is the same in all directions
+- You can approximate a circle with a hexagon or a ring of hexagons
+
+
+H3 is open source and there are implementations in a number of languages. You can find out more about it [here](https://eng.uber.com/h3/).
+
+
+### The Map
+
+This is a map of the UK overlaid with hexagons at different layers. The hexagons are coloured by layer. As you zoom in, the hexagons get
+smaller. Hover over a hexagon to see its h3 index.
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+library('h3')
+library('sf')
+library('leaflet')
+
+# Let's reuse the Ordnance Survey populated places data from an earlier map
+placesOSGB <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1 as placeName from named_place where type = "populatedPlace"')
+
+# Convert to WGS84
+places <- st_transform(placesOSGB, 4326 )
+
+# We'll create hexagons at different layers based on the places
+h3_index_02 <- geo_to_h3(places, 2)
+tbl <- table(h3_index_02) %>%
+  tibble::as_tibble()
+h302 <- h3_to_geo_boundary_sf(tbl$h3_index_02) 
+
+h3_index_03 <- geo_to_h3(places, 3)
+tbl <- table(h3_index_03) %>%
+  tibble::as_tibble()
+h303 <- h3_to_geo_boundary_sf(tbl$h3_index_03) 
+
+h3_index_04 <- geo_to_h3(places, 4)
+tbl <- table(h3_index_04) %>%
+  tibble::as_tibble()
+h304 <- h3_to_geo_boundary_sf(tbl$h3_index_04)
+
+h3_index_05 <- geo_to_h3(places, 5)
+tbl <- table(h3_index_05) %>%
+  tibble::as_tibble()
+h305 <- h3_to_geo_boundary_sf(tbl$h3_index_05)
+
+h3_index_06 <- geo_to_h3(places, 6)
+tbl <- table(h3_index_06) %>%
+  tibble::as_tibble()
+h306 <- h3_to_geo_boundary_sf(tbl$h3_index_06)
+
+h3_index_07 <- geo_to_h3(places, 7)
+tbl <- table(h3_index_07) %>%
+  tibble::as_tibble()
+h307 <- h3_to_geo_boundary_sf(tbl$h3_index_07)
+
+h3_index_08 <- geo_to_h3(places, 8)
+tbl <- table(h3_index_08) %>%
+  tibble::as_tibble()
+h308 <- h3_to_geo_boundary_sf(tbl$h3_index_08)
+
+# Render the hexagons on a leaflet map
+map <- leaflet(width = "100%") %>%
+  addProviderTiles("OpenStreetMap.Mapnik") %>%
+  addPolygons(
+    data = h303,
+    weight = 2,
+    color = "red",
+    fillColor = "red",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H303"
+  ) %>%
+  groupOptions("H303", zoomLevels = 04:05) %>%
+  addPolygons(
+    data = h304,
+    weight = 2,
+    color = "blue",
+    fillColor = "blue",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H304"
+  ) %>%
+  groupOptions("H304", zoomLevels = 06:07) %>%
+  addPolygons(
+    data = h305,
+    weight = 2,
+    color = "green",
+    fillColor = "green",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H305"
+  ) %>%
+  groupOptions("H305", zoomLevels = 08:09) %>%
+  addPolygons(
+    data = h306,
+    weight = 2,
+    color = "purple",
+    fillColor = "purple",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H306"
+  ) %>%
+  groupOptions("H306", zoomLevels = 10:11) %>%
+  addPolygons(
+    data = h307,
+    weight = 2,
+    color = "orange",
+    fillColor = "orange",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H307"
+  ) %>%
+  groupOptions("H307", zoomLevels = 12:13) %>%
+  addPolygons(
+    data = h308,
+    weight = 2,
+    color = "black",
+    fillColor = "black",
+    fillOpacity = 0.4,
+    label = ~ sprintf("%s", h3_index),
+    group = "H308"
+  ) %>%
+  groupOptions("H308", zoomLevels = 14:15)
+
+
+map
+
+```
+
+
+### Credits
+
+H3: https://eng.uber.com/h3/
+
+Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
