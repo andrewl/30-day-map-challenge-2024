@@ -50,6 +50,10 @@ div#menu #links {
   font-size: 12px;
 }
 
+div#menu #links a {
+	padding-left: 1em;
+}
+
 .container-fluid {
   padding-left: 0;
   padding-right: 0;
@@ -58,3 +62,5 @@ div#menu #links {
 div#footer {
 	border-top: 0.5em solid #f7b801;
 }
+
+

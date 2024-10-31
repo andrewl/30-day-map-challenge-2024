@@ -24,11 +24,12 @@ layer are of different sizes (so the more you zoom in, the smaller the hexagons 
 find the hexagon that contains that location.
 
 Why hexagons?
-- They tessellate (fit together without gaps)
-- Unlike squares or triangles they tessalate on edges rather than corners
-- This means you can add properties to the edges of the hexagons to indicate things like how 'expensive' it to move between two hexagons
-- This also means the distance between the centre of a hexagon and the centre of its neighbours is the same in all directions
-- You can approximate a circle with a hexagon or a ring of hexagons
+
+* They tessellate (fit together without gaps)
+* Unlike squares or triangles they tessalate on edges rather than corners
+* This means you can add properties to the edges of the hexagons to indicate things like how 'expensive' it to move between two hexagons
+* This also means the distance between the centre of a hexagon and the centre of its neighbours is the same in all directions
+* You can approximate a circle with a hexagon or a ring of hexagons
 
 
 H3 is open source and there are implementations in a number of languages. You can find out more about it [here](https://eng.uber.com/h3/).
