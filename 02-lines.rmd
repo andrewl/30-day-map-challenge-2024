@@ -21,10 +21,8 @@ starts.
 If you travel the length of the UK, from North to South, you might notice
 something about placenames - the word Kirk is replaced by the word Church.
 
-![](images/2218837318_1d29a7f419_w.jpg "Points")
-
-For today's map we're going to use the power of data science to find out where
-Kirk become Church!
+For today's map we're going to use the power of data visualisations to find out
+where Kirk become Church!
 
 ### Data
 

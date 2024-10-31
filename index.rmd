@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
-[Day 1 - Points]
+[Day 1 - Points](./01-points.html)
 
 [Day 2 - Lines]
 
