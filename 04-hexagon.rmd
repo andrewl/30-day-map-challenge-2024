@@ -15,8 +15,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-> This is a map made for [#30DayMapChallenge 2024](https://30daymapchallenge.com/).<br/>
-> Just here for [The Map]?<br/>
 > Want to see the code? Click on the black boxes on the right to show/hide the code. 
 
 Uber have devised a grid system for the world, using hexagons, called h3. Comprised of a number of layers, the hexagons at each

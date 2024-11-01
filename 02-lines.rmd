@@ -6,14 +6,16 @@ output:
     theme: sandstone   
     highlight: tango
     css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
 ---
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-> This is a map made for [#30DayMapChallenge 2024](https://30daymapchallenge.com/).<br/>
-> Just here for [The Map]?<br/>
 > Want to see the code? Click on the black boxes on the right to show/hide the code. 
+ 
 
 Lines. Lines can be boundaries - they can show us where one thing stops and another
 starts. 

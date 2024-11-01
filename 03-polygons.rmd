@@ -1,0 +1,74 @@
+---
+title: "3. Polygons. Simplify The UK."
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+
+Simply speaking a polygon is a collection of lines that join together to produce
+a closed shape. 
+
+All polygons are simplified versions of the real world. But we can simplify them
+further.
+
+In this map we take the UK and simplify it to extreme levels. We're going to 
+increase the maximum distance between points around the UK to 10km, 20km, 50km
+and then 100km, although we'll ensure that we don't remove any smaller polygons
+(islands)
+```{r data, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library('sf')
+library('mapview')
+
+# We can use the st_read function from the sf library to read in the data from the geopackage
+# and transform it to the British National Grid (EPSG:27700)
+# This is done so that the data is in metres and not degrees
+countries <- st_read('./data/03/geoBoundaries-GBR-ADM1_simplified.shp', quiet = TRUE) %>%
+st_transform(countries, crs = 27700)
+
+# Create 4 data frames with simplified topologies at various tolerances
+s10000 <- st_simplify(countries,  preserveTopology = TRUE, dTolerance = 10000)
+s20000 <- st_simplify(countries,  preserveTopology = TRUE, dTolerance = 20000)
+s50000 <- st_simplify(countries,  preserveTopology = TRUE, dTolerance = 50000)
+s100000 <- st_simplify(countries,  preserveTopology = TRUE, dTolerance = 100000)
+
+
+mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
+               layers.control.pos = "topright",
+               leafletWidth = "100%",
+               legend = FALSE
+               )
+
+# Add the layers to a map
+map  = mapview(s100000,  layer.name = "100km", col.regions = "yellow") +
+    mapview(s50000,  layer.name = "50km", col.regions = "blue") +
+    mapview(s20000, layer.name = "20km", col.regions = "green") +
+  mapview(s10000, layer.name= "10km", col.regions = "red") 
+
+```
+
+### The Map
+
+Here we have the UK simplified to 10,000, 20,000, 50,000 and 100,000 metres. You
+can use the layer control in the top-left to turn on/off individual layers.
+```{r map, results='show'}
+#Display the map
+map
+```
+
+### Credits
+
+Data: For this map we use data from [geoBoundaries](https://www.geoboundaries.org), specifically
+the Simplified Country Files for the UK found at https://www.geoboundaries.org/simplifiedDownloads.html
