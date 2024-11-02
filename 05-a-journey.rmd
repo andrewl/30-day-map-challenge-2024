@@ -1,0 +1,60 @@
+---
+title: "5. A Journey - Up Snowdon/Yr Wyddfa"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+### Snowdon / Yr Wyddfa
+
+The highest peak in Wales, higher than any in England. There are many ways to
+walk up it - I recommend walking up from the quieter Beddgelert side - Snowdon
+Ranger or Rhyd Ddu paths are usually attract far fewer visitors and are much
+more peaceful than the others.  
+ 
+### The Map
+
+A really simple map today. More than one journey though - these are some of the
+routes I've used to walk up Snowdon/Yr Wyddfa. Taken from gpx files that I've
+downloaded from my Strava account and drawn over OpenStreetMap data in the
+OpenTopoMap style.
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library('sf')
+library('mapview')
+
+# We can use the st_read function from the sf library to read in the data from 
+# the GPX files we have. We must specify the 'tracks' layer as this 
+s1 <- st_read('./data/05/01.gpx', layer = "tracks", quiet = TRUE)
+s2 <- st_read('./data/05/02.gpx', layer = "tracks", quiet = TRUE)
+s3 <- st_read('./data/05/03.gpx', layer = "tracks", quiet = TRUE)
+s4 <- st_read('./data/05/04.gpx', layer = "tracks", quiet = TRUE)
+s5 <- st_read('./data/05/05.gpx', layer = "tracks", quiet = TRUE)
+
+
+mapviewOptions(basemaps = c("OpenTopoMap"),
+               leafletWidth = "100%",
+               legend = FALSE,
+               homebutton = FALSE,
+               )
+
+# Finally plot the layers on the map in different colours.
+mapview(s1, color = "red", lwd=6, layer.name="Watkin/Miners") + 
+mapview(s2, color = "green", lwd=6, layer.name="Snowdon Ranger") +
+mapview(s3, color = "purple", lwd=6, layer.name="South Ridge/Pyg") + 
+mapview(s4, color = "blue", lwd=6, layer.name="Rhyd Ddu/Snowdon Ranger/Quarries") + 
+mapview(s5, color = "brown", lwd=6, layer.name="Miners/Snowdon Ranger")
+```
