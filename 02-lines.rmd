@@ -99,23 +99,25 @@ densityMap
 ### A little bit of history
 
 So we can see a little more clearly where the 'Church' and 'Kirk' placenames are. And if 
-we look at the map we can see that there's a bit of a divide between the two. If you know
-a bit about the history of the UK, you might know that there was a time when the country
-was divided into two parts - the Danelaw and the Saxon Kingdoms.
+we look at the map we can see that there's a bit of a divide between the two.
+
+If you know a bit about the history of the UK, you might know that there was a time when
+the country was divided into two parts - the Danelaw and the Saxon Kingdoms.
 
 The Danelaw represented areas where Danish (ie "Viking") legal systems were enforced, often
-in contrast to Anglo-Saxon laws of the time. Despite its dissolution, the Danelaw left a
-lasting impact on the UK particularly in terms of language, culture, and place names. Many
-English towns and cities in the Danelaw area still bear names of Scandinavian origin,
-reflecting the significant influence of the Vikings on the region.
+in contrast to Anglo-Saxon laws of the time.
 
-I've created a [geopackage]() at https://github.com/andrewl/danelaw that contains the 
+I've created a [geopackage](https://github.com/andrewl/danelaw) that contains the 
 boundary of the Danelaw - let's overlay this on our map to see if there's any correlation
 
 
 ### The Map
 
-And here we have it - a map showing the line between churches and kirks.
+And here we have it - a map showing the Danelaw and how, despite being 1000 years old, it left a
+lasting impact on the UK particularly in terms of language, culture, and place names. Many
+English towns and cities in the Danelaw area still bear names of Scandinavian origin, especially
+those 'Kirk's!
+
 ```{r map}
 DanelawBoundary <- st_read('./data/02/danelaw.gpkg', quiet = TRUE)
 
@@ -125,6 +127,3 @@ densityMap + mapview(DanelawBoundary, lwd = 6)
 ### Credits
 
 Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
-
-Image: _"Dockland Light railway points and crossing01" by Elsie esq. is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/?ref=openverse._
-
