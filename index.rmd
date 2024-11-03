@@ -20,9 +20,9 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 2 - Lines](./02-lines.html)
 
-[Day 3 - Polygons]
+[Day 3 - Polygons](./03-polygons.html)
 
-[Day 4 - Hexagons]
+[Day 4 - Hexagons](./04-hexagons.html)
 
 [Day 5 - A journey]
 
