@@ -17,11 +17,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 > Want to see the code? Click on the black boxes on the right to show/hide the code. 
 
-Uber have devised a grid system for the world, using hexagons, called h3. Comprised of a number of layers, the hexagons at each
-layer are of different sizes (so the more you zoom in, the smaller the hexagons get). Given a location and a layer, you can
-find the hexagon that contains that location.
+If you ever need to deal with a large number of data, at some point you'll need
+an index to retrieve that data quickly. Quadtrees, R-trees are common types of index
+but if you're operating on the scale of Uber you need
 
-Why hexagons?
+Uber have devised a multi-layered grid system for the world, using hexagons,
+called h3. Each hexagon has an id and the hexagons at each layer are of different
+sizes (so the more you zoom in, the smaller the hexagons get). 
+Given a location and a layer, you can find the hexagon that contains that location.
+
+But why hexagons?
 
 * They tessellate (fit together without gaps)
 * Unlike squares or triangles they tessalate on edges rather than corners
