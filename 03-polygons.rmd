@@ -16,7 +16,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 > Want to see the code? Click on the black boxes on the right to show/hide the code. 
 
-
 Simply speaking a polygon is a collection of lines that join together to produce
 a closed shape. 
 
@@ -52,10 +51,10 @@ mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
                )
 
 # Add the layers to a map
-map  = mapview(s100000,  layer.name = "100km", col.regions = "yellow") +
-    mapview(s50000,  layer.name = "50km", col.regions = "blue") +
-    mapview(s20000, layer.name = "20km", col.regions = "green") +
-  mapview(s10000, layer.name= "10km", col.regions = "red") 
+map  = mapview(s100000,  layer.name = "100km", col.regions = "yellow", zcol="shapeName") +
+    mapview(s50000,  layer.name = "50km", col.regions = "blue", zcol="shapeName") +
+    mapview(s20000, layer.name = "20km", col.regions = "green", zcol="shapeName") +
+  mapview(s10000, layer.name= "10km", col.regions = "red", zcol="shapeName") 
 
 ```
 
