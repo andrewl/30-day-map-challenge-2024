@@ -1,0 +1,107 @@
+---
+title: "9. AI - Only. New York's Green Spaces. Sort-of."
+output:
+  rmarkdown::html_document:
+    author: ChatGPT
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+Highlights from my 'conversation' with ChatGPT. Find it in full here: https://chatgpt.com/share/6727f6b7-3140-800a-b25f-d14363bb93b5
+
+_Me: Hi ChatGPT. If you were making a map for the 30DayMapChallenge, what would you make a map of?_
+
+If I were making a map for the 30DayMapChallenge, I'd consider something creative and informative that aligns with the day's prompt. Here are a few ideas:
+
+- Historical Trade Routes: A map illustrating famous trade routes like the Silk Road or the Spice Route, showing connections between different cultures and the flow of goods and ideas over centuries.
+
+- Biodiversity Hotspots: A map highlighting global regions with exceptionally high species diversity and endemism, coupled with conservation status.
+
+- Languages of the World: A map depicting the geographic spread of major languages, showcasing linguistic diversity and regions with the highest multilingualism.
+
+- Coffee Production: A map showing the world's top coffee-producing regions, detailing the different types of coffee beans and their flavor profiles.
+
+- Urban Green Spaces: A map of a city (e.g., Tokyo or New York) showing public parks, green roofs, and urban forests, emphasizing how cities integrate nature.
+
+-    Mythical Creatures by Region: A fun and thematic map displaying where various mythical creatures are said to originate around the world (e.g., dragons in Asia, werewolves in Europe).
+
+-    Migration Patterns: A map tracking the seasonal migration of animals like monarch butterflies or whales, showing their long-distance journeys and stopping points.
+
+-    Geological Formations: A map marking places known for unique geological formations (e.g., Grand Canyon, Giant's Causeway), focusing on how they were formed and their significance.
+
+-    Climate Change Impact: A map illustrating regions most affected by climate change, showing rising sea levels, increased temperatures, and deforestation.
+
+-    Cultural Festivals: A map showing where notable festivals occur around the world and their dates, providing a visual calendar of global celebrations.
+
+Would any of these ideas fit into what you were thinking for a challenge map?
+
+_Me: They all look like great ideas, but I'm interested in what you think! Why don't you pick one of those and produce an rmarkdown (rmd) file that uses the mapview library to create a map for your chosen subject. You'd also need to create a separate file containing the geospatial data to display - geojson would be an ideal format._
+
+Great! I’ll go with the Urban Green Spaces idea, focusing on a well-known city like New York City. This map will highlight public parks and green spaces, using mapview in R to provide an interactive visualization. I'll create an RMarkdown file (urban_green_spaces_nyc.Rmd) and a separate GeoJSON file (nyc_green_spaces.geojson) for the geospatial data.
+
+Here's how I'll approach this:
+
+-    Create a GeoJSON file that contains data on parks and green spaces in New York City.
+
+-    Develop an RMarkdown file that reads the GeoJSON data and uses the mapview library to create an interactive map.
+    
+    
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+# Let's load the sf and mapview libraries to process and view geospatial data
+library(sf)
+library(mapview)
+library(raster)
+library(terra)
+
+# Load the GeoJSON data
+green_spaces <- st_read("data/09/nyc_green_spaces.geojson")
+```
+
+## The Map 
+
+#### Interactive Map of Urban Green Spaces
+
+New York City is known for its vibrant parks and green spaces that provide essential ecological and recreational benefits to the urban population. This map visualizes the locations of key green spaces in the city.
+
+_Me: So, here's what ChatGPT gave me. First impression is that, at its fullest extent you can't really see the green spaces. This is something_
+_that I did ask to be addressed, but that didn't really seem to happen._
+
+_But if you zoom in, it doesn't really look like the data it created accurately matches the boundaries of the green spaces - it sort-of gets some_
+_of them in the right location, but as with anything LLM related - it might be correct 80% of the time, but that means you still have to check_
+_100% of its work._
+
+```{r map}
+
+# Set custom mapview options for better visibility
+mapviewOptions(
+  basemaps = c("OpenStreetMap", "Esri.WorldImagery"),
+  vector.palette = colorspace::sequential_hcl(1, palette = "Greens"),
+  leafletWidth = "100%",
+)
+
+# Display the map with enhanced properties
+mapview(
+  green_spaces,
+  col.regions = "green", # Color of the polygons
+  alpha.regions = 0.6,   # Transparency of the fill
+  lwd = 2,               # Line width
+  legend = TRUE,         # Show legend
+  layer.name = "NYC Green Spaces"
+)
+```
+
+
+### Credits
+
+I guess OpenAI owns some of the copyright in this map?
