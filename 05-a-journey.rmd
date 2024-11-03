@@ -27,9 +27,10 @@ more peaceful than the others.
 ### The Map
 
 A really simple map today. More than one journey though - these are some of the
-routes I've used to walk up Snowdon/Yr Wyddfa. Taken from gpx files that I've
-downloaded from my Strava account and drawn over OpenStreetMap data in the
-OpenTopoMap style.
+routes I've used to walk up Snowdon/Yr Wyddfa. Not all of them are the 'standard'
+paths - a couple traverse some of the old quarries that remain on the hillside.
+Taken from gpx files that I've downloaded from my Strava account and drawn
+over OpenStreetMap data in the OpenTopoMap style.
 
 ```{r map, message=FALSE, warning=FALSE, results='show'}
 #First, we'll need to load a bunch of libraries so we can handle and view geospatial data

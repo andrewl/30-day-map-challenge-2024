@@ -1,0 +1,49 @@
+---
+title: "2. Raster - UK Road Numbers"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+ 
+UK Road Numbers
+
+### Data
+
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+# Let's load the sf and mapview libraries to process and view geospatial data
+library(sf)
+library(mapview)
+library(raster)
+library(terra)
+
+
+numberedRoads <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1, mbr_xmin, mbr_ymin, mbr_xmax, mbr_ymax from named_place where local_type = "Numbered Road" and (name1 like "M%" or name1 like "A%")')
+
+numberedRoads$id <- as.numeric(substr(numberedRoads$name1, 2, 2))
+
+rasterTemplate = rast(ext(numberedRoads), resolution = 25000,
+                           crs=st_crs(numberedRoads)$wkt, vals=0)
+
+# Next we'll create two rasters - one where the value of each cell is the number of 'Kirk' places,
+# one where it's the number of 'Church' places in each square.
+roadNumbers = rasterize(subset(numberedRoads), rasterTemplate, field="id", mean)
+
+mapview(roadNumbers)
+```
+
+
+### Credits
+
+Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/

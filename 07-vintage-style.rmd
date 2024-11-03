@@ -1,0 +1,20 @@
+---
+title: "7. Vintage Style - Old Web Map"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+
+Old map
+
+![](images/vintage.png "Old Map")
+
+### Credits
+
+Image:
