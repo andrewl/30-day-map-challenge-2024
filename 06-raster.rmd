@@ -1,5 +1,5 @@
 ---
-title: "2. Raster - UK Road Numbers"
+title: "6. Raster - UK Road Numbers"
 output:
   rmarkdown::html_document:
     code_folding: hide
@@ -16,9 +16,37 @@ knitr::opts_chunk$set(echo = TRUE)
 
 > Want to see the code? Click on the black boxes on the right to show/hide the code. 
  
-UK Road Numbers
+Believe it or not, UK Road Numbers aren't just randomly chosen. They're actually
+arranged in a precise system that we can see on this map. I've taken the first number
+from Great Britain's Motorways and A-roads (eg 4 for M4, 3 for A30) colour coding
+each 25km x 25km square with the 'average' of all the numbers.
 
-### Data
+Hopefully, you'll see a pattern - for England and Wales there's a spiral out from 
+London 
+
+- '1' roads head north
+
+- '2' south-east
+
+- '3' south-west
+
+- '4' west
+
+- '5' north-west
+
+- '6' north (up the centre of the country)
+
+and up to Scotland there's a spiral out from Edinburgh
+
+- '7' roads are to the south-east
+
+- '8' roads cover the west of Scotland
+
+- '9' roads cover the east of Scotland
+
+And the linear boundaries between the zones arem you've guessed it - roads! The
+A1 and A2 roughly define the boundary of zone 1, the A2 and A3 the boundary of
+zone 2 etc.
 
 
 ```{r map, message=FALSE, warning=FALSE, results='show'}
@@ -28,19 +56,30 @@ library(mapview)
 library(raster)
 library(terra)
 
+# Let's select all the numbered road segments for M roads (motorways) and A roads.
+numberedRoads <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1 from named_place where local_type = "Numbered Road" and (name1 like "M%" or name1 like "A%")')
 
-numberedRoads <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1, mbr_xmin, mbr_ymin, mbr_xmax, mbr_ymax from named_place where local_type = "Numbered Road" and (name1 like "M%" or name1 like "A%")')
-
+# Create a new field, id, containing the first number of the road
 numberedRoads$id <- as.numeric(substr(numberedRoads$name1, 2, 2))
 
+# This creates a blank raster, 25km squares covering the extent of the numberedRoads data
 rasterTemplate = rast(ext(numberedRoads), resolution = 25000,
                            crs=st_crs(numberedRoads)$wkt, vals=0)
 
-# Next we'll create two rasters - one where the value of each cell is the number of 'Kirk' places,
-# one where it's the number of 'Church' places in each square.
-roadNumbers = rasterize(subset(numberedRoads), rasterTemplate, field="id", mean)
 
-mapview(roadNumbers)
+# We'll use the max value of the id field (the first digit in the road number)
+# as the value for each raster cell.
+roadNumbers = rasterize(subset(numberedRoads), rasterTemplate, field="id", max)
+
+
+# And finally, display it on a map.
+mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
+               layers.control.pos = "topright",
+               leafletWidth = "100%",
+               legend = TRUE
+               )
+
+mapview(roadNumbers, col.regions = rainbow)
 ```
 
 
