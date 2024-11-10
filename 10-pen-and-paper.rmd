@@ -1,0 +1,18 @@
+---
+title: "10. Pen and Paper"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+
+A map of places someone like me in the late-80s or early-90s might have visited in London.
+
+You might remember some of these places or you might not.
+
+![](images/10-pen-and-paper.png)
