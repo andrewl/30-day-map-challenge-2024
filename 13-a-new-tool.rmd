@@ -1,0 +1,98 @@
+---
+title: "13. A New Tool - Is It In London?"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+ 
+Is it in London?
+
+There are some places that lie within the M25 but are not in any London Borough. TFL might operate some buses in these areas,
+you might be able to use a London Underground station, but you won't be able to vote in London elections. Depending on your
+point of view (usually where you live), these places might be 'in London' or they might not.
+
+This map shows the area within the M25 that is not part of any London Borough. To build this, I used a bunch of new geometry tools
+and:
+
+- Used the M25 and A282 roads, noting that the M25 doesn’t fully circle London (the Dartford Crossing is designated as the A282).
+
+- Joined the M25 and A282 roads to form a continuous path.
+
+- Created a convex hull around this path to generate an M25 polygon.
+
+- Loaded a London Wards shapefile to build a polygon representing London.
+
+- Subtracted the London polygon from the M25 polygon to isolate the area within the M25 but outside London.
+   
+- Created a rectangle covering the UK and subtracted the M25 polygon from it, further refining the area to only within the M25 and outside London.
+
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+# Let's loadng the sf and mapview libraries to process and view geospatial data
+library(sf)
+library(leaflet)
+library(raster)
+library(terra)
+library(concaveman)
+
+# Load the M25 and A282 roads
+m25 <- st_read('./data/13/Data/oproad_gb.gpkg', quiet = TRUE, query = 'select * from road_link where (road_classification_number = "M25" or road_classification_number = "A282")')
+
+# Load the London Wards shapefile
+london_wards <- st_read('./data/13/London-wards-2018_ESRI/London_Ward.shp', quiet = TRUE)
+
+# Combine the M25 and A282 roads to form a continuous path
+m25_coords <- st_union(m25) %>% st_cast('POINT') %>% st_union() %>% st_coordinates()
+
+# Use concaveman to create a concave hull around the points
+polygon_boundary <- concaveman(m25_coords)
+
+# Convert the concave hull back to an sf polygon
+m25_poly <- st_sfc(st_polygon(list(polygon_boundary)), crs = 27700)
+
+# Subtract the London Wards from the M25 polygon
+inside_m25_outside_london <- st_difference(m25_poly, st_union(london_wards))
+
+# The bounds of the UK in EPSG:27700
+minx <- 0
+miny <- 0
+maxx <- 700000
+maxy <- 1300000
+
+# Create a rectangle vector
+rect <- st_sfc(st_polygon(list(rbind(c(minx, miny), c(maxx, miny), c(maxx, maxy), c(minx, maxy), c(minx, miny)))), crs=27700)
+
+# Punch a hole in the rectangle using the M25 polygon
+m25_hole <- st_difference(rect, inside_m25_outside_london) %>% st_transform(crs=4326)
+
+# Create a leaflet map
+map <- leaflet(width = "100%") %>%
+  addProviderTiles("OpenStreetMap.Mapnik") %>%
+  addPolygons(
+    data = m25_hole,
+    color = "white",
+    fillColor = "white",
+    fillOpacity = 0.95
+  )%>%
+  setView(lng = -0.1407376, lat = 51.4908968, zoom = 10) 
+
+map
+
+```
+### Credits
+
+Data: Ordnance Survey Open Roads from https://osdatahub.os.uk/downloads/open/OpenRoads OGLv3 https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+
+London Wards Boundaries from https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london OGLv2 https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/
