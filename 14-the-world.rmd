@@ -1,0 +1,62 @@
+---
+title: 11. A World Map - Half Of All Of Us
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+Here's a map of the world showing the "Valeriepieris circle" - that's the smallest circle that can be drawn on the globe which contains *half* of the world's population.
+
+There are no calculations in the code, it's just a map. The coordinates for the circle come from a paper by Rudy Arthur, which you can find https://arxiv.org/pdf/2307.16728v1
+
+
+```{r data, message=FALSE, warning=FALSE, results='hide'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library('sf')
+library(dplyr)
+library('ggplot2')
+
+# Now we'll load the world borders data 
+wrld_simpl <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = "ESRI:54009")
+
+#From Valeriepieris Circles for Spatial Data Analysis
+#Rudy Arthur
+#https://arxiv.org/abs/2307.16728
+pt1 = st_point(c(100.625,28.375)) %>% st_sfc(crs= "ESRI:4326")
+buf = st_buffer(pt1, dist = 33) %>% st_sfc(crs=4326) %>% st_transform(crs = "ESRI:54009")
+
+highlights <- st_intersection(wrld_simpl, buf)
+```
+
+## The Map
+
+The circle is overlaid on a Molleweide projection of the world. This projection is an equal-area projection, which means that the area of each country is proportional to its actual area. It also means the circle doesn't appear as a circle because whilst this projection preserves area, it distorts shape and distance.
+
+```{r map, fig.asp = 1, fig.width = 10, out.width = "100%"}
+
+ggplot() + 
+  geom_sf(data = wrld_simpl , fill= "palegreen", color="darkgreen")+
+  geom_sf(data = highlights , fill= "yellow", color="darkblue")+
+  geom_sf(data = buf , fill= NA, color="red", linewidth=2, alpha = 0.1)+
+  theme_void() +
+  theme(axis.line = element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(), panel.background = element_rect(fill = "white"))
+
+```
+
+
+### Credits
+
+If you want to read more about the Valeriepieris circle, you can find a paper "Valeriepieris Circles for Spatial Data Analysis" by Rudy Arthur here https://arxiv.org/pdf/2307.16728v1
+
+Map data from the World Wind Java project: https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt    
