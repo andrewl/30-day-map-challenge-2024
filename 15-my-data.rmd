@@ -43,7 +43,7 @@ colnames(jsonData) <- c("lat", "lng", "count", "Average Altitude")
 destinations <- st_as_sf(jsonData, coords = c("lat", "lng"), 
                                    crs = 4326)
 
-mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
+mapviewOptions(basemaps = c("Esri.WorldTopoMap"),
                layers.control.pos = "topright",
                legend.pos = "bottomleft",
                leafletWidth = "100%",
@@ -52,7 +52,7 @@ mapviewOptions(basemaps = c("Esri.WorldShadedRelief"),
 
 pal = mapViewPalette("Pastel 1")
 
-mapview(destinations, zcol="Average Altitude", cex="count",  col.regions=RColorBrewer::brewer.pal(7, "Greens"))
+mapview(destinations, zcol="Average Altitude", cex="count",  col.regions=RColorBrewer::brewer.pal(7, "Reds"))
 ``` 
 
 
