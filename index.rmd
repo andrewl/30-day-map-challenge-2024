@@ -34,11 +34,19 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 9 - AI only](./09-ai.html)
 
-[Day 10 - Pen & paper](./10-pen-paper.html)
+[Day 10 - Pen & paper](./10-pen-and-paper.html)
 
 [Day 11 - Arctic](./11-arctic.html)
 
 [Day 12 - Time and space](./12-time-space.html)
+
+[Day 13 - A new tool](./13-a-new-tool.html)
+
+[Day 14 - A world map](./14-world-map.html)
+
+[Day 15 - My data](./15-my-data.html)
+
+[Day 16 - Choropleth](./16-choropleth.html)
 
 [Day 13 - A new tool]
 

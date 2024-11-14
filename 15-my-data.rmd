@@ -36,13 +36,17 @@ library(sf)
 library(mapview)
 library(jsonlite)
 
+#Next, we'll load the data from a JSON file
 jsonData <- data.frame(fromJSON('./data/15/watft_destinations.json'))
 
+#We'll need to rename the columns because the JSON file doesn't have any column names
 colnames(jsonData) <- c("lat", "lng", "count", "Average Altitude")
 
+#Now we'll convert the data into a spatial object
 destinations <- st_as_sf(jsonData, coords = c("lat", "lng"), 
                                    crs = 4326)
 
+#Now we'll plot the data
 mapviewOptions(basemaps = c("Esri.WorldTopoMap"),
                layers.control.pos = "topright",
                legend.pos = "bottomleft",
@@ -50,12 +54,8 @@ mapviewOptions(basemaps = c("Esri.WorldTopoMap"),
                legend = TRUE
                )
 
+#We'll use a palette from the mapview package
 pal = mapViewPalette("Pastel 1")
 
 mapview(destinations, zcol="Average Altitude", cex="count",  col.regions=RColorBrewer::brewer.pal(7, "Reds"))
 ``` 
-
-
-### Credits
-
-Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/

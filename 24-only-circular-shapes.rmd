@@ -1,0 +1,49 @@
+---
+title: 24. Only Circular Shapes
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+## The Map
+
+Only circular shapes - a world map where each country is represented by a circle. 
+The size of the circle is proportionate to its 2005 population.
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library(sf)
+library(mapview)
+
+# Now we'll load the world borders data 
+wrld_simpl <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = 3857)
+
+# Now let's change the geometry to the centre point of each country
+wrld_simpl <- st_centroid(wrld_simpl)
+
+mapviewOptions(basemaps = c("CartoDB.Positron"),
+               layers.control.pos = "topright",
+               legend.pos = "bottomleft",
+               leafletWidth = "100%",
+               legend = FALSE               )
+
+
+# Now we'll plot the map - we'll use the population data to determine the size of the circle and set the min and max radius
+mapview(wrld_simpl, cex="POP2005", min.rad = 5, max.rad = 100, zcol="NAME")
+
+```
+
+## Credits
+
+Map data from the World Wind Java project: https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt

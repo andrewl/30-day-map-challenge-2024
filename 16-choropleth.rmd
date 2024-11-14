@@ -1,0 +1,52 @@
+---
+title: 16. Choropleth - World Population Density
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+## The Map
+
+A choropleth map is a type of thematic map in which areas are shaded or patterned in proportion to the value of a statistical variable being represented on the map.
+
+This simple map shows the population density of each country in the world. The darker the color, the higher the population density. 
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library(sf)
+library(mapview)
+
+# Now we'll load the world borders data 
+wrld_simpl <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = 3857)
+
+# Let's calculate the real area of each country
+wrld_simpl$realarea =  as.numeric(st_area(wrld_simpl))
+
+# and calculate the population density of each country
+wrld_simpl$PopulationDensity <- (wrld_simpl$POP2005 / wrld_simpl$realarea) * 10000
+
+mapviewOptions(basemaps = c("CartoDB.Positron"),
+               layers.control.pos = "topright",
+               legend.pos = "bottomleft",
+               leafletWidth = "100%",
+               legend = FALSE)
+
+# Now we can plot the map, note that we're using custom breaks and colors
+mapview(wrld_simpl, zcol="PopulationDensity", label="NAME", at=c(0,0.2,0.5,1,2,5,10,20), col.regions=RColorBrewer::brewer.pal(5, "Reds"))
+
+```
+
+## Credits
+
+Map data from the World Wind Java project: https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt
