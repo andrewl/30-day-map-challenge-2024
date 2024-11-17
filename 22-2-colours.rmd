@@ -51,7 +51,7 @@ vv = st_join(st_as_sf(cropped_v), blackAndWhite)
 vv$colour <- ifelse(grepl("lack", vv$placeName), 0, 1)
 
 #Now we can plot the map
-mapviewOptions(basemaps = c("Stadia.AlidadeSmooth"),
+mapviewOptions(basemaps = c("Esri.WorldGrayCanvas"),
                leafletWidth = "100%",
                legend = FALSE,
                homebutton = FALSE,
