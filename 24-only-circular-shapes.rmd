@@ -40,7 +40,7 @@ mapviewOptions(basemaps = c("CartoDB.Positron"),
 
 
 # Now we'll plot the map - we'll use the population data to determine the size of the circle and set the min and max radius
-mapview(wrld_simpl, cex="POP2005", min.rad = 5, max.rad = 100, zcol="NAME")
+mapview(wrld_simpl, cex="POP2005", min.rad = 2, max.rad = 100, label="NAME")
 
 ```
 

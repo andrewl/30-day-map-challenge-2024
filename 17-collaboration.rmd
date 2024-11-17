@@ -1,0 +1,20 @@
+---
+title: "17. Collaboration"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+
+We always say that you can judge a good book by the quality of its map. So we decided
+to put together a map that might appear in the front of a good book. This map was created
+by members of our family!
+
+![](images/collaboration.png "Collaboration")
+
+### Credits

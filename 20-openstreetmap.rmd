@@ -1,0 +1,90 @@
+---
+title: "20. OpenStreetMap - Highest Place South Of..."
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+### Highest Place South Of...
+
+Walking up Pen y Fan, the highest peak in South Wales, I saw it was listed as the highest peak south of Snowdonia.
+Wondering which other peaks can qualify as 'the highest peak south of...' I decided to use OpenStreetMap data to find out.
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+library(sp)
+library(raster)
+library(sf)
+library(osmdata)
+#library(dplyr)
+
+# The UK boundary, approximately
+osm_bbox = c(-6.499674,49.777007,-0.523026,60.959244)
+
+# Get all the peaks in the UK
+peaks = opq(osm_bbox, osm_types="node") %>% 
+  add_osm_feature(key="natural", value="peak") %>% 
+  osmdata_sf() 
+
+# Filter out the peaks with no elevation data or name
+peak_points <- peaks$osm_points
+peak_points$elevationNum = as.numeric(peak_points$ele)
+peak_points <- peak_points[!is.na(peak_points$elevationNum) & !is.na(peak_points$name),]
+
+# Filter out the peaks outside the UK
+uk_boundary <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = 4326) %>% filter(NAME == "United Kingdom")
+
+peak_points <- st_intersection(st_cast(peak_points), st_union(uk_boundary)) 
+
+# We'll store the highest peaks here
+highest_peaks <- st_sf(data.frame(id = integer(0), geometry = st_sfc()), crs = 4326)
+
+# Loop through the peaks
+last_ele = 0
+last_lat = 0
+while(nrow(peak_points[(peak_points$elevationNum > last_ele) & ((st_coordinates(peak_points)[,2]) > last_lat),]) > 0) {
+  
+  filtered_sf = peak_points[(peak_points$elevationNum > last_ele) & ((st_coordinates(peak_points)[,2]) > last_lat),]
+
+  next_feature = filtered_sf[which.min(st_coordinates(filtered_sf)[, 2]), c("name", "elevationNum") ]
+
+  highest_peaks <- rbind(highest_peaks, next_feature)
+  
+  last_ele = next_feature$elevationNum
+  last_lat = st_coordinates(next_feature)[,2]
+}
+
+# Write a description for each peak
+for (i in 1:(nrow(highest_peaks) - 1)) {
+  highest_peaks$description[i] <- paste(highest_peaks$name[i] , " at " , highest_peaks$elevationNum[i] , "m is the highest place in the UK south of", highest_peaks$name[i+1])
+
+}
+
+highest_peaks$description[nrow(highest_peaks)-1] <- paste(highest_peaks$name[nrow(highest_peaks)-2] , " at " , highest_peaks$elevationNum[nrow(highest_peaks)-2] , "m is the highest place in the UK")
+
+mapviewOptions(basemaps = c("CartoDB.Positron"),
+               layers.control.pos = "topright",
+               legend.pos = "bottomleft",
+               leafletWidth = "100%",
+               legend = FALSE)
+
+mapview(highest_peaks, label="description")
+```
+
+
+
+### Credits
+
+Data: [OpenStreetMap](https://www.openstreetmap.org/)
+

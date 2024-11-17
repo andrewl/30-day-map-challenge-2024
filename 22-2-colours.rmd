@@ -1,0 +1,69 @@
+---
+title: "22. 2 Colours - Black and White"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+ 
+
+### Map
+
+Here's a map of the UK split into two colours - black and white. The map shows the Voronoi polygons of all the places in the UK with "black" or "white" in their name. Anywhere within a black area is nearer to a town with "black" in it's name than "white", vice-versa
+with white areas.
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library('sf')
+library('raster')
+library('mapview')
+library('terra')
+library(dplyr)
+
+#Next, we'll load the data we need from the OS Open Names dataset
+blackAndWhite <- st_read('./data/02/opname_gb.gpkg', quiet = TRUE, query='SELECT geometry, name1 as placeName from named_place where type = "populatedPlace" and (name1 like "%black%" or name1 like "%white%")') 
+
+#We'll also need the UK boundary to crop the Voronoi polygons to the UK
+uk_boundary <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = 27700) %>% filter(NAME == "United Kingdom")
+
+#Now we can create the Voronoi polygons
+v <- blackAndWhite %>% 
+  st_union() %>%
+  st_voronoi(envelope=st_as_sfc(uk_boundary)) 
+
+#And crop them to the UK
+cropped_v <- st_intersection(st_cast(v), st_union(uk_boundary)) 
+
+#Join the Voronoi polygons to the original data so we can colour them
+vv = st_join(st_as_sf(cropped_v), blackAndWhite)
+
+#Add a column to the data to colour the polygons
+vv$colour <- ifelse(grepl("lack", vv$placeName), 0, 1)
+
+#Now we can plot the map
+mapviewOptions(basemaps = c("Stadia.AlidadeSmooth"),
+               leafletWidth = "100%",
+               legend = FALSE,
+               homebutton = FALSE,
+               fgb = FALSE
+               )
+
+
+
+mapview(vv, label="placeName", zcol="colour", lwd=1, col.regions=list("black","white"),col=list("black"), alpha.regions = 1, aplha = 1 )
+```
+
+### Credits
+
+Data: Ordnance Survey Open Places OGL https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+World Boundaries: WorldWind https://worldwind.arc.nasa.gov/

@@ -1,0 +1,127 @@
+---
+title: "18. 3D - Routes of Snowdon"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+### Data
+
+An extension of [05 A Journey](05-a-journey.html) but this time the map is in 3D. I've taken
+3D elevation data from the SRTM dataset, overlaid with OpenStreetMap data for roads and waterways.
+The routes are from my GPX files downloaded from Strava. I've added shadows and textures to the
+3D map to make it look more realistic.
+
+I used Tyler Morgan-Wall's `rayshader` package to create the 3D map, and used his blog posts at
+[tylermw.com](https://www.tylermw.com) for inspiration.
+
+I've used the `rayshader` package to render the 3D map at various angles and then created a video
+to show it off in all its glory.
+
+
+### The Map
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+library(rayshader)
+library(sp)
+library(raster)
+library(scales)
+library(sf)
+library(osmdata)
+library(ggplot2)
+library(dplyr)
+
+# Load the elevation data
+snowdon_elevation <- raster::raster("./data/18/output_SRTMGL1.tif")
+snowdon_elevation_matrix <- rayshader::raster_to_matrix(snowdon_elevation)
+
+# Set the extent of the elevation data
+osm_bbox = c(-4.23541666664337,53.0037499999991,-3.96347222219889,53.127638888888)
+
+# Get the OpenStreetMap data for roads and waterways
+roads = opq(osm_bbox) %>% 
+  add_osm_feature("highway") %>% 
+  osmdata_sf() 
+
+water = opq(osm_bbox) %>% 
+  add_osm_feature("water") %>% 
+  osmdata_sf() 
+
+waterway = opq(osm_bbox) %>% 
+  add_osm_feature("waterway") %>% 
+  osmdata_sf() 
+
+# Get coordinates of the routes
+s1 <- st_read("./data/05/01.gpx", layer = "tracks", quiet = TRUE) %>% st_transform(crs = crs(snowdon_elevation))
+s2 <- st_read("./data/05/02.gpx", layer = "tracks", quiet = TRUE) %>% st_transform(crs = crs(snowdon_elevation))
+s3 <- st_read("./data/05/03.gpx", layer = "tracks", quiet = TRUE) %>% st_transform(crs = crs(snowdon_elevation))
+s4 <- st_read("./data/05/04.gpx", layer = "tracks", quiet = TRUE) %>% st_transform(crs = crs(snowdon_elevation))
+s5 <- st_read("./data/05/05.gpx", layer = "tracks", quiet = TRUE) %>% st_transform(crs = crs(snowdon_elevation))
+
+# Combine the routes into a single dataframe
+routes <- dplyr::bind_rows(list(s1,s2,s3,s4,s5))
+
+# Transform the roads and waterways to the same CRS as the elevation data
+roads_lines = st_transform(roads$osm_lines, crs=crs(snowdon_elevation)) %>% filter(highway %in% c("primary", "secondary", "tertiary"))
+water_lines = st_transform(waterway$osm_lines, crs=crs(snowdon_elevation))
+water_polys = st_transform(water$osm_polygons, crs=crs(snowdon_elevation))
+
+# Generate an overlay for the routes, roads and waterways
+route_line_overlay = generate_line_overlay(routes, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 6, color="yellow")
+route_line_overlay_inner = generate_line_overlay(routes, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 2, color="red") 
+
+roads_line_overlay = generate_line_overlay(roads_lines, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 6, color="black") 
+roads_line_overlay_inner = generate_line_overlay(roads_lines, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 4, color="lightgrey") 
+
+water_line_overlay = generate_line_overlay(water_lines, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 1, color="skyblue2") 
+
+water_poly_overlay = generate_polygon_overlay(water_polys, heightmap = snowdon_elevation_matrix, extent=extent(snowdon_elevation), linewidth = 1, linecolor="skyblue2", palette="skyblue2") 
+
+# Plot the 3D map
+base_map = snowdon_elevation_matrix %>% 
+  height_shade() %>% 
+  add_overlay(sphere_shade(snowdon_elevation_matrix, texture = "desert", zscale=4, colorintensity = 5), alphalayer=0.5) %>%
+  add_overlay(water_poly_overlay) %>%
+  add_overlay(water_line_overlay) %>%
+  add_overlay(roads_line_overlay) %>%
+  add_overlay(roads_line_overlay_inner) %>%
+  add_overlay(route_line_overlay) %>%
+  add_overlay(route_line_overlay_inner) %>%
+  add_shadow(lamb_shade(snowdon_elevation_matrix,zscale = 40),0) %>%
+  add_shadow(texture_shade(snowdon_elevation_matrix,detail=8/10,contrast=8,brightness = 11), 0.1) %>%
+  plot_3d(heightmap=snowdon_elevation_matrix, windowsize = c(1200,800), zscale=40)
+
+# Save the 3D map at various angles
+#angles= seq(0,360,length.out = 1441)[-1]
+#for(i in 1:1440) {
+#  render_camera(theta=-45+angles[i], phi=20, zoom=0.2,  fov=60)
+
+#  render_snapshot(filename = sprintf("snowdon%i.png", i), 
+#                  title_text = "Snowdon routes",
+#                  title_bar_color = "#1f5214", title_color = "white", title_bar_alpha = 1)
+#}
+#rgl::rgl.close()
+
+# Create a video of the 3D map from the frames
+#system("ffmpeg -framerate 60 -i snowdon%d.png -pix_fmt yuv420p images/snowdon.mp4")
+```
+
+![](images/snowdon.mp4)
+
+
+### Credits
+
+Data: [SRTM](https://www2.jpl.nasa.gov/srtm/),
+[OpenStreetMap](https://www.openstreetmap.org/)

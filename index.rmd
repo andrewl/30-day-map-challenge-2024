@@ -48,29 +48,21 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 16 - Choropleth](./16-choropleth.html)
 
-[Day 13 - A new tool]
+[Day 17 - Collaborative map](./17-collaborative-map.html)
 
-[Day 14 - A world map]
+[Day 18 - 3D](./18-3d.html)
 
-[Day 15 - My data]
+[Day 19 - Typography](./19-typography.html)
 
-[Day 16 - Choropleth]
+[Day 20 - OpenStreetMap](./20-openstreetmap.html)
 
-[Day 17 - Collaborative map]
+[Day 21 - Conflict](./21-conflict.html)
 
-[Day 18 - 3D]
+[Day 22 - 2 colours](./22-2-colours.html)
 
-[Day 19 - Typography]
+[Day 23 - Memory](./23-memory.html)
 
-[Day 20 - OpenStreetMap]
-
-[Day 21 - Conflict]
-
-[Day 22 - 2 colours]
-
-[Day 23 - Memory]
-
-[Day 24 - Only circular shapes]
+[Day 24 - Only circular shapes](./24-circular.html)
 
 [Day 25 - Heat]
 
