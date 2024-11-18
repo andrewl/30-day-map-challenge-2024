@@ -1,0 +1,63 @@
+---
+title: 19. Typography
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+This one is about typography. We take the population density of each country and use it to determine the size of the text on the map. The more dense the population, the larger the text. 
+
+## The Map
+
+```{r map, message=FALSE, warning=FALSE, results='show'}
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library(sf)
+library(leaflet)
+library(purrr)
+library(dplyr)
+
+# Now we'll load the world borders data 
+wrld_simpl <- st_read('./data/11/TM_WORLD_BORDERS-0.2.shp', quiet = TRUE) %>% st_transform(crs = 3857)
+
+# Let's calculate the real area of each country
+wrld_simpl$realarea =  as.numeric(st_area(wrld_simpl))
+
+# and calculate the population density of each country
+wrld_simpl$PopulationDensity <- (wrld_simpl$POP2005 / wrld_simpl$realarea)
+
+# we're going to add a new field containing the text size - this is based on the density with a min value of 8
+wrld_simpl$textSize = paste(as.integer((wrld_simpl$PopulationDensity*12000)+8), "px", sep="")
+
+# work out the centroid of each country and transform into wgs84 projections
+wrld_simpl <- st_centroid(wrld_simpl) %>% st_transform(crs=4326)
+
+# create the base map with a grey background
+m <- leaflet(width="100%") %>% addProviderTiles("Esri.WorldGrayCanvas") 
+
+# use the purrr walk to iterate over each unique pixel size we have
+# filter on the countries that map that pixel size
+# and plot them on the map with text size set to the pixel size
+unique(wrld_simpl$textSize) %>% purrr::walk(function(pixelValue) { 
+  filtered <- filter(wrld_simpl, textSize==pixelValue)
+  m <<- m %>% addLabelOnlyMarkers(data=filtered, label = ~as.character(NAME), labelOptions = labelOptions(style=list(color="red"), textsize = ~pixelValue, noHide = T, direction = 'center', textOnly = T))
+})
+
+# and just draw the map
+m
+
+```
+
+## Credits
+
+Map data from the World Wind Java project: https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt

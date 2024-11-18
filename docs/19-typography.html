@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>19. Typography</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="css/andrewl.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<div id="menu"><div>30 Day Map Challenge</div><div id="links"><div><a href="https://andrewl.github.io/30-day-map-challenge-2024">Home</a></div><div><a href="https://github.com/andrewl/30-day-map-challenge-2024">Github</a></div></div></div>
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">19. Typography</h1>
+
+</div>
+
+
+<blockquote>
+<p>Want to see the code? Click on the black boxes on the right to
+show/hide the code.</p>
+</blockquote>
+<p>This one is about typography. We take the population density of each
+country and use it to determine the size of the text on the map. The
+more dense the population, the larger the text.</p>
+<div id="the-map" class="section level2">
+<h2>The Map</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#First, we&#39;ll need to load a bunch of libraries so we can handle and view geospatial data</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Now we&#39;ll load the world borders data </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>wrld_simpl <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&#39;./data/11/TM_WORLD_BORDERS-0.2.shp&#39;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3857</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># Let&#39;s calculate the real area of each country</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>wrld_simpl<span class="sc">$</span>realarea <span class="ot">=</span>  <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(wrld_simpl))</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co"># and calculate the population density of each country</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>wrld_simpl<span class="sc">$</span>PopulationDensity <span class="ot">&lt;-</span> (wrld_simpl<span class="sc">$</span>POP2005 <span class="sc">/</span> wrld_simpl<span class="sc">$</span>realarea)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co"># we&#39;re going to add a new field containing the text size - this is based on the density with a min value of 8</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>wrld_simpl<span class="sc">$</span>textSize <span class="ot">=</span> <span class="fu">paste</span>(<span class="fu">as.integer</span>((wrld_simpl<span class="sc">$</span>PopulationDensity<span class="sc">*</span><span class="dv">12000</span>)<span class="sc">+</span><span class="dv">8</span>), <span class="st">&quot;px&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># work out the centroid of each country and transform into wgs84 projections</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>wrld_simpl <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(wrld_simpl) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co"># create the base map with a grey background</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">leaflet</span>(<span class="at">width=</span><span class="st">&quot;100%&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">addProviderTiles</span>(<span class="st">&quot;Esri.WorldGrayCanvas&quot;</span>) </span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># use the purrr walk to iterate over each unique pixel size we have</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co"># filter on the countries that map that pixel size</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co"># and plot them on the map with text size set to the pixel size</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="fu">unique</span>(wrld_simpl<span class="sc">$</span>textSize) <span class="sc">%&gt;%</span> purrr<span class="sc">::</span><span class="fu">walk</span>(<span class="cf">function</span>(pixelValue) { </span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>  filtered <span class="ot">&lt;-</span> <span class="fu">filter</span>(wrld_simpl, textSize<span class="sc">==</span>pixelValue)</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>  m <span class="ot">&lt;&lt;-</span> m <span class="sc">%&gt;%</span> <span class="fu">addLabelOnlyMarkers</span>(<span class="at">data=</span>filtered, <span class="at">label =</span> <span class="sc">~</span><span class="fu">as.character</span>(NAME), <span class="at">labelOptions =</span> <span class="fu">labelOptions</span>(<span class="at">style=</span><span class="fu">list</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>), <span class="at">textsize =</span> <span class="sc">~</span>pixelValue, <span class="at">noHide =</span> T, <span class="at">direction =</span> <span class="st">&#39;center&#39;</span>, <span class="at">textOnly =</span> T))</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>})</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co"># and just draw the map</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>m</span></code></pre></div>
+<div id="htmlwidget-2900a0e2ca1764ccedc5" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2900a0e2ca1764ccedc5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[17.28075785849102,23.84986949377168,37.5914025488647,19.43184790726503,21.63047527307506,15.99289598292537,7.101319732393505,13.45308395369369,51.22276389531532,15.71068211485361,40.1756776595642,47.15267422778159,-13.23718099720558,18.22423958023334,50.64903883401967,16.28336666430489,9.616602083957481,28.26547929161722,30.13961064353975,17.26592967559545,-6.415929057798647,46.80773115509425,15.18833433151214,-20.00364154691215,8.542020340055709,0.4583627187035633,1.281258764547329,54.36211383648997,18.51008772349994,-13.78587381827045,-2.24250164050349],[-61.79114167530499,90.26643115978767,104.1614765395126,-80.82838129051886,-79.05253458173702,-24.1049894411534,154.8057389397777,-15.38546617971548,10.40277968261601,-90.3557030317468,127.1974331266634,9.555255807321753,34.3103103457788,-63.05795044400598,4.660759423051521,145.5881031011365,8.110150148939878,83.92295159181973,69.47565071954099,-62.69621939969252,52.2087590167714,8.235762029101577,101.0157196660109,-174.8261692526436,0.9750639012817737,6.737334470261008,32.38644414669358,-2.957032128030162,-64.48182026577619,-177.1460720002072,117.3206812871807],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["Antigua and Barbuda","Bangladesh","China","Cayman Islands","Cuba","Cape Verde","Micronesia, Federated States of","Gambia","Germany","Guatemala","Korea, Democratic People's Republic of","Liechtenstein","Malawi","Anguilla","Belgium","Northern Mariana Islands","Nigeria","Nepal","Pakistan","Saint Kitts and Nevis","Seychelles","Switzerland","Thailand","Tonga","Togo","Sao Tome and Principe","Uganda","United Kingdom","British Virgin Islands","Wallis and Futuna Islands","Indonesia"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"9px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[[28.42466560456194,40.30453685357963,41.15503460888553,40.29330605684791,-12.35378008188183,-36.61028998173643,-26.23395397287937,24.19817444872016,17.22185008249033,44.1781966481696,-16.78314585438818,21.26656606011151,9.657887327903573,-8.910193869021128,-11.17113099239281,42.77343169835346,4.521582225970517,67.72347134508566,12.71982126332877,-0.8420200525983047,-2.903527696006913,33.91680492150405,27.41742817687428,-40.47052259357634,5.703677455374847,15.46897290597115,3.921338480610102,9.972450782530325,6.579621594890414,-19.04710096451736,35.04384021794343,55.98226084451117,11.75087768037557,15.43669786688955,-1.426719768149797,26.59267598027476,53.20366057533385,1.710530999211078,58.68427508113465,15.36859713099135,8.656259476652211,47.6032040772478,49.75196478006347,3.925820184289807,64.91626789119329,-17.46808546933577,-51.74179061827641,-15.25865866659354,46.68832110154916,-0.5911693754146528,42.18440618159398,7.970056198971894,77.30745173059964,13.44410450098322,39.1015697725103,10.44508728245675,4.799657707444721,14.82217556690268,45.06266185715148,47.1783738374342,65.02587170860065,32.76032317318177,42.95967190067967,7.639456383545666,33.11808473547465,37.85398356769141,31.2702471033922,0.5307205582657177,41.48592936950649,0.1452170723417128,29.34498811507412,48.43971589471312,18.53966080921501,33.92331070447975,56.86751233971022,53.58714078537648,55.34998170890483,6.450786208446846,48.71229562644686,27.16822218006553,-19.46883191299126,46.97167181845113,16.73577018223458,41.60264812000103,17.4495075903313,31.94693064594729,20.3476084629545,20.64417200355657,24.19333711545805,3.79761125450857,-17.400178291169,-21.29814813400533,-19.05192148008832,17.48867832911195,62.05339977857786,42.5486556139802,36.13819706766323,54.2291104711218,49.77189296360419,43.75034908267921,42.79492993654777,-12.81839554242742,60.1988623852384,-29.03720413670527,-12.17188427749115,-89.9999997677867,-54.4218001161025,-49.09778689280414,-53.09077611651396,-7.082278528279972,-10.44411954299207,16.66729963243357,-16.22026588921428,52.26674284599979,65.39553691715157,4.128677143726501,12.84589874613928,-42.06608273610021,-23.28499039648504,-9.248053475355762,52.18745108993522,8.506630549223539,39.65092755194751,-6.486056383477271,12.01709542192369,25.31778020756315,45.87786601255926,47.20766983030507,64.8582369096584,24.18493215464476,-29.12653240593025,-29.58415361899334,-22.22993504236204,14.37536383537944,46.12665706346416,8.562411972186352,6.097068702720834,40.33952459658018,13.89817108485962,13.98096101208102,63.41314183574252,35.03788818042821,38.54352601165495,-9.087291676460314,34.16131150465602,39.1024058378061,39.17662283617327,-6.290854837422182,49.09604096486962,51.19898476112657,12.28601019575563,-32.8216025467677,41.82775545194689,7.143727358138745,-22.24834426331059,-13.75853031505209,-26.56409159256273,15.82143033505094,-13.48570054429446,-19.02323247976084,23.91924895261285,-8.822696226159914,-24.50667398326063,7.388393673033059,8.440727409937008,46.92926621116625,-27.31480512030127,21.80879683875904,24.70543386512428,44.05909657582046,78.95880337942702,18.08760822061211,18.04683685518948,49.45906139188273,49.21951266801275,-54.70663787063198,23.76054917589357],[2.629129323239428,47.53154113748993,20.06735977676462,44.94375681519433,17.54658160908376,-65.40898339808275,134.604630203223,-76.52000297377577,-88.68230561435281,17.78281946126771,-64.66451896592562,96.50598115026646,2.34387584314976,159.6183025648889,-53.02636920532139,25.23474182989433,114.7613478051013,-97.22062986710299,104.9220932159895,15.22355662516755,23.65817293958142,66.06600153898228,90.42927184711077,-71.52071024620173,12.74619651213497,18.66933445004152,-73.07787406806995,-84.19014097159376,20.48605454004522,-159.1049519229512,33.21940800348325,10.04337207451623,42.57823347662764,-61.3555089549584,-78.78106369589307,29.86416399528499,-8.147945774924544,10.33832338785353,25.52492961298375,38.84742585141734,39.61128712096088,14.14818746439014,15.33470854933414,-53.24128000892421,26.3072880361699,160.7876938590008,-59.37364222449108,-145.5939435886943,2.53904942943768,11.79710102665196,43.50909488773926,-1.206964369193539,-41.16441047732724,144.775888382833,22.98383344292281,-10.94493606080439,-58.97520770282045,-86.61848194888967,16.40816780325904,19.42186798064841,-18.60361769715179,54.21884919116747,12.0074230598949,-5.555581687922079,43.75763818678062,138.1650709534369,36.7938053966343,37.85785238067784,74.57155019522696,-29.09270908836589,47.59318541243116,67.33218346535175,103.744906629181,35.88928626015321,24.92540815659604,28.0560856195076,23.89185032782441,-9.308971051328868,19.49663528718012,17.99566986503023,46.68694512376654,103.0448824332029,-62.18692251737422,21.69882209105514,-3.501214393199943,-6.279640769380223,-10.32043573601486,56.12463896199688,-102.7141262956522,109.7122025155844,35.5170451063167,165.6748303251239,-169.8685892259913,9.42523592752276,-6.863783976091096,1.575701137060238,-5.344888661625394,-4.526366182222826,6.087369487321906,7.412018352565497,19.25412916107932,45.1392622398497,19.95186857243876,167.9528675197538,96.85559808444451,0.6961355593294375,3.412454017653211,68.79797556879019,73.49734215097025,72.29013659692326,105.7036984301074,-28.99589506946825,167.7114481144025,5.606710692939185,15.07700452141844,-55.91154063472673,-85.03303920752056,171.452229603968,-58.36927928241759,-74.35580821746066,19.38649770193243,-80.10926628434221,-8.449546654683912,145.2563031991015,-14.98729816233693,51.19126975425385,24.96439604540558,28.4700036380829,97.82600820961208,44.51882353681828,25.0396388926197,28.241971159084,23.80973874660379,-14.4702427666646,14.8291354701392,-11.79214201818843,45.87370827374232,-3.625080231076126,-60.96868628418353,30.05970601630775,16.9904058265732,38.51602681338208,71.03547831938009,-171.8318406798799,9.559918219836552,35.17656003502996,59.34597016695179,34.82908739170117,31.34958816959718,-119.2597405349967,-1.73656357201555,-56.00870354257258,63.08757740679122,-66.17166527859835,17.22580406532117,-172.1592284438025,31.49722118419458,47.63529166879994,27.78107890105588,29.87208933302971,54.33631140833,125.8773633230681,-128.4439590295893,134.4840543385888,168.6050022190311,-56.30534152680666,-10.26345987219166,-71.88215476994176,-13.11432251674955,20.79754048976728,18.51871845128496,-63.06456702829217,-63.06194364833079,-2.575815588347765,-2.128925316132891,-35.84878379288013,120.9475382821993],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["Algeria","Azerbaijan","Albania","Armenia","Angola","Argentina","Australia","Bahamas","Belize","Bosnia and Herzegovina","Bolivia","Burma","Benin","Solomon Islands","Brazil","Bulgaria","Brunei Darussalam","Canada","Cambodia","Congo","Democratic Republic of the Congo","Afghanistan","Bhutan","Chile","Cameroon","Chad","Colombia","Costa Rica","Central African Republic","Cook Islands","Cyprus","Denmark","Djibouti","Dominica","Ecuador","Egypt","Ireland","Equatorial Guinea","Estonia","Eritrea","Ethiopia","Austria","Czech Republic","French Guiana","Finland","Fiji","Falkland Islands (Malvinas)","French Polynesia","France","Gabon","Georgia","Ghana","Greenland","Guam","Greece","Guinea","Guyana","Honduras","Croatia","Hungary","Iceland","Iran (Islamic Republic of)","Italy","Cote d'Ivoire","Iraq","Japan","Jordan","Kenya","Kyrgyzstan","Kiribati","Kuwait","Kazakhstan","Lao People's Democratic Republic","Lebanon","Latvia","Belarus","Lithuania","Liberia","Slovakia","Libyan Arab Jamahiriya","Madagascar","Mongolia","Montserrat","The former Yugoslav Republic of Macedonia","Mali","Morocco","Mauritania","Oman","Mexico","Malaysia","Mozambique","New Caledonia","Niue","Niger","Faroe Islands","Andorra","Gibraltar","Isle of Man","Luxembourg","Monaco","Montenegro","Mayotte","Åland Islands","Norfolk Island","Cocos (Keeling) Islands","Antarctica","Bouvet Island","French Southern and Antarctic Lands","Heard Island and McDonald Islands","British Indian Ocean Territory","Christmas Island","United States Minor Outlying Islands","Vanuatu","Netherlands","Norway","Suriname","Nicaragua","New Zealand","Paraguay","Peru","Poland","Panama","Portugal","Papua New Guinea","Guinea-Bissau","Qatar","Romania","Republic of Moldova","Russia","Saudi Arabia","South Africa","Lesotho","Botswana","Senegal","Slovenia","Sierra Leone","Somalia","Spain","Saint Lucia","Sudan","Sweden","Syrian Arab Republic","Tajikistan","Tokelau","Tunisia","Turkey","Turkmenistan","United Republic of Tanzania","Ukraine","United States","Burkina Faso","Uruguay","Uzbekistan","Venezuela","Namibia","Samoa","Swaziland","Yemen","Zambia","Zimbabwe","Untied Arab Emirates","Timor-Leste","Pitcairn Islands","Palau","Marshall Islands","Saint Pierre and Miquelon","Saint Helena","Turks and Caicos Islands","Western Sahara","Serbia","Svalbard","Saint Martin","Saint Barthelemy","Guernsey","Jersey","South Georgia South Sandwich Islands","Taiwan"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"8px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[[-14.28593955457714,7.615327873802253,-3.356687436432735,13.73664511019197,18.94165924078994,23.21109077119046,36.39026946423586,14.65286580026607,-21.1217985795831,11.82652063291123,10.46880358204002,13.20222651245825,17.9686365066781],[-170.4019162224429,80.70397978922544,29.88677696648585,-88.86595411980116,-72.68286417295738,79.634503722413,127.8314478855718,-61.0215079090446,55.53825685746099,122.8563249635878,-61.25249344481746,-61.20749925384855,-64.78698031778291],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["American Samoa","Sri Lanka","Burundi","El Salvador","Haiti","India","Korea, Republic of","Martinique","Reunion","Philippines","Trinidad and Tobago","Saint Vincent and the Grenadines","United States Virgin Islands"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"11px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[26.01977257130103,50.56243654218095,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Bahrain",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"18px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[13.17882790832852,-59.56213511398688,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Barbados",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"15px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[32.31351515477564,-64.75635597510558,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Bermuda",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"21px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[[-11.89391662413516,12.51670390405588,31.91586279036668],[43.67666245767903,-69.97714062884572,35.20415161285017],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["Comoros","Aruba","Palestine"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"13px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[[18.89513133305066,12.16262306077546,31.37165601883359,18.15159558248854,-7.591114079175165,16.81634342439406,16.23514709637015,12.3785876480847,43.94192852513545],[-70.48569127218974,-61.6499989504579,34.96738916733004,-77.31997035912495,178.2036601406945,106.2803397048928,-61.55275134587616,-68.48931505914567,12.46036106503793],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["Dominican Republic","Grenada","Israel","Jamaica","Tuvalu","Viet Nam","Guadeloupe","Netherlands Antilles","San Marino"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[-20.17608712920013,57.8679027447524,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Mauritius",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"14px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[35.92046748000749,14.40450109694972,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Malta",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"16px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[3.385105299101832,73.25168115273229,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Maldives",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"32px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[22.37668354691855,114.1122617371542,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Hong Kong",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"76px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[22.19954088872567,113.5449681177196,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Macau",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"79px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[[-0.5220733390319099,18.22112147475373,-1.998104467407916],[166.9300834954382,-66.46613467803655,29.91715751104324],{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["Nauru","Puerto Rico","Rwanda"],{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"12px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[1.351181534975677,103.8076536280563,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Singapore",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"100px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]},{"method":"addMarkers","args":[41.90417758724453,12.45113461380763,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Holy See (Vatican City)",{"interactive":false,"permanent":true,"direction":"center","opacity":1,"offset":[0,0],"textsize":"24px","textOnly":true,"style":{"color":"red"},"className":"","sticky":true},null]}],"limits":{"lat":[-89.9999997677867,78.95880337942702],"lng":[-177.1460720002072,178.2036601406945]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="credits" class="section level2">
+<h2>Credits</h2>
+<p>Map data from the World Wind Java project: <a
+href="https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt"
+class="uri">https://github.com/nasa/World-Wind-Java/blob/master/WorldWind/testData/shapefiles/TM_WORLD_BORDERS-0.2Readme.txt</a></p>
+</div>
+
+<div id="footer"></div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

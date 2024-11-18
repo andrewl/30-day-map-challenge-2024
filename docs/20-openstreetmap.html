@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>20. OpenStreetMap - Highest Place South Of…</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<link href="site_libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="site_libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="site_libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="site_libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="site_libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="site_libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="css/andrewl.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<div id="menu"><div>30 Day Map Challenge</div><div id="links"><div><a href="https://andrewl.github.io/30-day-map-challenge-2024">Home</a></div><div><a href="https://github.com/andrewl/30-day-map-challenge-2024">Github</a></div></div></div>
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">20. OpenStreetMap - Highest Place South
+Of…</h1>
+
+</div>
+
+
+<blockquote>
+<p>Want to see the code? Click on the black boxes on the right to
+show/hide the code.</p>
+</blockquote>
+<div id="highest-place-south-of" class="section level3">
+<h3>Highest Place South Of…</h3>
+<p>Walking up Pen y Fan, the highest peak in South Wales, I saw it was
+listed as the highest peak south of Snowdonia. Wondering which other
+peaks can qualify as ‘the highest peak south of…’ I decided to use
+OpenStreetMap data to find out.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(mapview)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># The UK boundary, approximately</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>osm_bbox <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">6.499674</span>,<span class="fl">49.777007</span>,<span class="sc">-</span><span class="fl">0.523026</span>,<span class="fl">60.959244</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co"># Get all the peaks in the UK</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>peaks <span class="ot">=</span> <span class="fu">opq</span>(osm_bbox, <span class="at">osm_types=</span><span class="st">&quot;node&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="at">key=</span><span class="st">&quot;natural&quot;</span>, <span class="at">value=</span><span class="st">&quot;peak&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>() </span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co"># Filter out the peaks with no elevation data or name</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>peak_points <span class="ot">&lt;-</span> peaks<span class="sc">$</span>osm_points</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>peak_points<span class="sc">$</span>elevationNum <span class="ot">=</span> <span class="fu">as.numeric</span>(peak_points<span class="sc">$</span>ele)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>peak_points <span class="ot">&lt;-</span> peak_points[<span class="sc">!</span><span class="fu">is.na</span>(peak_points<span class="sc">$</span>elevationNum) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(peak_points<span class="sc">$</span>name),]</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co"># Filter out the peaks outside the UK</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>uk_boundary <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&#39;./data/11/TM_WORLD_BORDERS-0.2.shp&#39;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>peak_points <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(<span class="fu">st_cast</span>(peak_points), <span class="fu">st_union</span>(uk_boundary)) </span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co"># We&#39;ll store the highest peaks here</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>highest_peaks <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(<span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">integer</span>(<span class="dv">0</span>), <span class="at">geometry =</span> <span class="fu">st_sfc</span>()), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co"># Loop through the peaks</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>last_ele <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>last_lat <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="cf">while</span>(<span class="fu">nrow</span>(peak_points[(peak_points<span class="sc">$</span>elevationNum <span class="sc">&gt;</span> last_ele) <span class="sc">&amp;</span> ((<span class="fu">st_coordinates</span>(peak_points)[,<span class="dv">2</span>]) <span class="sc">&gt;</span> last_lat),]) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>  </span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  filtered_sf <span class="ot">=</span> peak_points[(peak_points<span class="sc">$</span>elevationNum <span class="sc">&gt;</span> last_ele) <span class="sc">&amp;</span> ((<span class="fu">st_coordinates</span>(peak_points)[,<span class="dv">2</span>]) <span class="sc">&gt;</span> last_lat),]</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>  next_feature <span class="ot">=</span> filtered_sf[<span class="fu">which.min</span>(<span class="fu">st_coordinates</span>(filtered_sf)[, <span class="dv">2</span>]), <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;elevationNum&quot;</span>) ]</span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>  highest_peaks <span class="ot">&lt;-</span> <span class="fu">rbind</span>(highest_peaks, next_feature)</span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>  </span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>  last_ele <span class="ot">=</span> next_feature<span class="sc">$</span>elevationNum</span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a>  last_lat <span class="ot">=</span> <span class="fu">st_coordinates</span>(next_feature)[,<span class="dv">2</span>]</span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>}</span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co"># Write a description for each peak</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">nrow</span>(highest_peaks) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a>  highest_peaks<span class="sc">$</span>description[i] <span class="ot">&lt;-</span> <span class="fu">paste</span>(highest_peaks<span class="sc">$</span>name[i] , <span class="st">&quot; at &quot;</span> , highest_peaks<span class="sc">$</span>elevationNum[i] , <span class="st">&quot;m is the highest place in the UK south of&quot;</span>, highest_peaks<span class="sc">$</span>name[i<span class="sc">+</span><span class="dv">1</span>])</span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a>}</span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>highest_peaks<span class="sc">$</span>description[<span class="fu">nrow</span>(highest_peaks)] <span class="ot">&lt;-</span> <span class="fu">paste</span>(highest_peaks<span class="sc">$</span>name[<span class="fu">nrow</span>(highest_peaks)] , <span class="st">&quot; at &quot;</span> , highest_peaks<span class="sc">$</span>elevationNum[<span class="fu">nrow</span>(highest_peaks)] , <span class="st">&quot;m is the highest place in the UK&quot;</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="fu">mapviewOptions</span>(<span class="at">basemaps =</span> <span class="fu">c</span>(<span class="st">&quot;CartoDB.Positron&quot;</span>),</span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a>               <span class="at">layers.control.pos =</span> <span class="st">&quot;topright&quot;</span>,</span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a>               <span class="at">legend.pos =</span> <span class="st">&quot;bottomleft&quot;</span>,</span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a>               <span class="at">leafletWidth =</span> <span class="st">&quot;100%&quot;</span>,</span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a>               <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a><span class="fu">mapview</span>(highest_peaks, <span class="at">label=</span><span class="st">&quot;description&quot;</span>)</span></code></pre></div>
+<div id="htmlwidget-d0ab29597456f9818371" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d0ab29597456f9818371">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[[49.9134412,50.0949972,50.13910649999999,50.1650069,50.38315129999999,50.4125146,50.4168599,50.4319825,50.4445351,50.4736537,50.5059644,50.5741139,50.60143750000001,50.627436,50.6852238,51.8455826,51.8485293,51.8530361,51.8589879,51.86331000000001,51.86334839999999,51.8718781,51.8749595,51.87531850000001,51.88176850000001,51.8840224,52.6995951,52.78700240000001,53.06186899999999,53.0684857,56.3707765,56.3860093,56.5449045,56.7968582],[-6.3105992,-5.6564048,-5.657006699999999,-5.6134453,-4.812737699999999,-3.893176899999999,-3.875432200000001,-3.897296799999999,-3.9215002,-3.8988098,-3.8913234,-4.0310496,-3.971095900000001,-3.9833155,-4.011154500000001,-3.8300271,-3.421702100000001,-3.6145975,-3.6269556,-3.4972736,-3.4327195,-3.352342,-3.7002136,-3.445916700000001,-3.4437946,-3.436750099999999,-3.9088003,-3.6878778,-4.0831058,-4.0762324,-4.5356275,-4.540063400000001,-4.220874399999999,-5.003526],6,null,"highest_peaks",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#6666FF","fillOpacity":0.6},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3130876144&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Buzza Hill&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>  32&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Buzza Hill  at  32 m is the highest place in the UK south of Chapel Carn Brea&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>538907003&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Chapel Carn Brea&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 198&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Chapel Carn Brea  at  198 m is the highest place in the UK south of Carn Kenidjack&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2134924418&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Carn Kenidjack&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 202&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Carn Kenidjack  at  202 m is the highest place in the UK south of Watch Croft&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>643879427&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Watch Croft&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 252&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Watch Croft  at  252 m is the highest place in the UK south of Hensbarrow Downs&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>11298069714&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Hensbarrow Downs&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 364&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Hensbarrow Downs  at  364 m is the highest place in the UK south of Butterdon Hill&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>329448759&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Butterdon Hill&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 367&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Butterdon Hill  at  367 m is the highest place in the UK south of Ugborough Beacon&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>329449852&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Ugborough Beacon&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 375&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Ugborough Beacon  at  375 m is the highest place in the UK south of Piles Hill&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>329445279&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Piles Hill&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 387&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Piles Hill  at  387 m is the highest place in the UK south of Hillson's House;Stalldown Barrow&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8602352241&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Hillson's House;Stalldown Barrow&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 413&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Hillson's House;Stalldown Barrow  at  413 m is the highest place in the UK south of Western White Barrow&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>431856858&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Western White Barrow&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 486&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Western White Barrow  at  486 m is the highest place in the UK south of Ryder's Hill&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>329384494&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Ryder's Hill&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 516&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Ryder's Hill  at  516 m is the highest place in the UK south of Great Mis Tor&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>326006272&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Great Mis Tor&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 538&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Great Mis Tor  at  538 m is the highest place in the UK south of Rough Tor&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>325969243&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Rough Tor&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 546&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Rough Tor  at  546 m is the highest place in the UK south of Cut Hill&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>326067321&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Cut Hill&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 603&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Cut Hill  at  603 m is the highest place in the UK south of High Willhays&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>325680713&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>High Willhays&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 621&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>High Willhays  at  621 m is the highest place in the UK south of Garreg Lwyd&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>307875844&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Garreg Lwyd&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 630&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Garreg Lwyd  at  630 m is the highest place in the UK south of Twyn Mwyalchod&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1593427090&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Twyn Mwyalchod&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 642&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Twyn Mwyalchod  at  642 m is the highest place in the UK south of Fan Fraith&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3598319707&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Fan Fraith&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 668&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Fan Fraith  at  668 m is the highest place in the UK south of Fan Gyhirych&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1537168633&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Fan Gyhirych&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 725&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Fan Gyhirych  at  725 m is the highest place in the UK south of Fan Fawr&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1537344492&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Fan Fawr&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 734&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Fan Fawr  at  734 m is the highest place in the UK south of Cefn Cul&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3526075062&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Cefn Cul&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 740&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Cefn Cul  at  740 m is the highest place in the UK south of Carn Pica&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>10094923549&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Carn Pica&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 756&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Carn Pica  at  756 m is the highest place in the UK south of Fan Hir&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1542069956&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Fan Hir&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 761&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Fan Hir  at  761 m is the highest place in the UK south of Craig-Gwaun-Taf&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3526108429&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Craig-Gwaun-Taf&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 826&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Craig-Gwaun-Taf  at  826 m is the highest place in the UK south of Corn Du&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>32319360&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Corn Du&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 873&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Corn Du  at  873 m is the highest place in the UK south of Pen y Fan&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>16346725&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Pen y Fan&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 886&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Pen y Fan  at  886 m is the highest place in the UK south of Cadair Idris&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4079553118&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Cadair Idris&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 893&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Cadair Idris  at  893 m is the highest place in the UK south of Aran Fawddwy&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>29750079&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Aran Fawddwy&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 905&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Aran Fawddwy  at  905 m is the highest place in the UK south of Clawdd Coch&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2772604813&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Clawdd Coch&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td> 931&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Clawdd Coch  at  931 m is the highest place in the UK south of Yr Wyddfa&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8755297244&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Yr Wyddfa&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>1085&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Yr Wyddfa  at  1085 m is the highest place in the UK south of Stob Binnein&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>259035673&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Stob Binnein&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>1165&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Stob Binnein  at  1165 m is the highest place in the UK south of Ben More&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8870336&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Ben More&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>1174&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Ben More  at  1174 m is the highest place in the UK south of Ben Lawers&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>55560959&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Ben Lawers&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>1214&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Ben Lawers  at  1214 m is the highest place in the UK south of Ben Nevis&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>8870212&emsp;<\/td><\/tr><tr><td>1<\/td><th>name&emsp;<\/th><td>Ben Nevis&emsp;<\/td><\/tr><tr><td>2<\/td><th>elevationNum&emsp;<\/th><td>1345&emsp;<\/td><\/tr><tr><td>3<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><tr><td>4<\/td><th>description&emsp;<\/th><td>Ben Nevis  at  1345 m is the highest place in the UK&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["Buzza Hill  at  32 m is the highest place in the UK south of Chapel Carn Brea","Chapel Carn Brea  at  198 m is the highest place in the UK south of Carn Kenidjack","Carn Kenidjack  at  202 m is the highest place in the UK south of Watch Croft","Watch Croft  at  252 m is the highest place in the UK south of Hensbarrow Downs","Hensbarrow Downs  at  364 m is the highest place in the UK south of Butterdon Hill","Butterdon Hill  at  367 m is the highest place in the UK south of Ugborough Beacon","Ugborough Beacon  at  375 m is the highest place in the UK south of Piles Hill","Piles Hill  at  387 m is the highest place in the UK south of Hillson's House;Stalldown Barrow","Hillson's House;Stalldown Barrow  at  413 m is the highest place in the UK south of Western White Barrow","Western White Barrow  at  486 m is the highest place in the UK south of Ryder's Hill","Ryder's Hill  at  516 m is the highest place in the UK south of Great Mis Tor","Great Mis Tor  at  538 m is the highest place in the UK south of Rough Tor","Rough Tor  at  546 m is the highest place in the UK south of Cut Hill","Cut Hill  at  603 m is the highest place in the UK south of High Willhays","High Willhays  at  621 m is the highest place in the UK south of Garreg Lwyd","Garreg Lwyd  at  630 m is the highest place in the UK south of Twyn Mwyalchod","Twyn Mwyalchod  at  642 m is the highest place in the UK south of Fan Fraith","Fan Fraith  at  668 m is the highest place in the UK south of Fan Gyhirych","Fan Gyhirych  at  725 m is the highest place in the UK south of Fan Fawr","Fan Fawr  at  734 m is the highest place in the UK south of Cefn Cul","Cefn Cul  at  740 m is the highest place in the UK south of Carn Pica","Carn Pica  at  756 m is the highest place in the UK south of Fan Hir","Fan Hir  at  761 m is the highest place in the UK south of Craig-Gwaun-Taf","Craig-Gwaun-Taf  at  826 m is the highest place in the UK south of Corn Du","Corn Du  at  873 m is the highest place in the UK south of Pen y Fan","Pen y Fan  at  886 m is the highest place in the UK south of Cadair Idris","Cadair Idris  at  893 m is the highest place in the UK south of Aran Fawddwy","Aran Fawddwy  at  905 m is the highest place in the UK south of Clawdd Coch","Clawdd Coch  at  931 m is the highest place in the UK south of Yr Wyddfa","Yr Wyddfa  at  1085 m is the highest place in the UK south of Stob Binnein","Stob Binnein  at  1165 m is the highest place in the UK south of Ben More","Ben More  at  1174 m is the highest place in the UK south of Ben Lawers","Ben Lawers  at  1214 m is the highest place in the UK south of Ben Nevis","Ben Nevis  at  1345 m is the highest place in the UK"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-6.3105992,49.9134412,-3.352342,56.7968582,true,"highest_peaks","Zoom to highest_peaks","<strong> highest_peaks <\/strong>","bottomright"]},{"method":"addLayersControl","args":["CartoDB.Positron","highest_peaks",{"collapsed":true,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[49.9134412,56.7968582],"lng":[-6.3105992,-3.352342]},"fitBounds":[49.9134412,-6.3105992,56.7968582,-3.352342,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script>
+</div>
+<div id="credits" class="section level3">
+<h3>Credits</h3>
+<p>Data: <a href="https://www.openstreetmap.org/">OpenStreetMap</a></p>
+</div>
+
+<div id="footer"></div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

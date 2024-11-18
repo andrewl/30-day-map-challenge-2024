@@ -27,7 +27,8 @@ library(sp)
 library(raster)
 library(sf)
 library(osmdata)
-#library(dplyr)
+library(dplyr)
+library(mapview)
 
 # The UK boundary, approximately
 osm_bbox = c(-6.499674,49.777007,-0.523026,60.959244)
@@ -71,7 +72,7 @@ for (i in 1:(nrow(highest_peaks) - 1)) {
 
 }
 
-highest_peaks$description[nrow(highest_peaks)-1] <- paste(highest_peaks$name[nrow(highest_peaks)-2] , " at " , highest_peaks$elevationNum[nrow(highest_peaks)-2] , "m is the highest place in the UK")
+highest_peaks$description[nrow(highest_peaks)] <- paste(highest_peaks$name[nrow(highest_peaks)] , " at " , highest_peaks$elevationNum[nrow(highest_peaks)] , "m is the highest place in the UK")
 
 mapviewOptions(basemaps = c("CartoDB.Positron"),
                layers.control.pos = "topright",
