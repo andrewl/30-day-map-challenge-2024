@@ -55,22 +55,22 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 20 - OpenStreetMap](./20-openstreetmap.html)
 
-[Day 21 - Conflict](./21-conflict.html)
+[Day 21 - Conflict](./21-conflict.html) <!--roman forts -->
 
 [Day 22 - 2 colours](./22-2-colours.html)
 
-[Day 23 - Memory](./23-memory.html)
+[Day 23 - Memory](./23-memory.html) <!-- hand drawn -->
 
 [Day 24 - Only circular shapes](./24-only-circular-shapes.html)
 
-[Day 25 - Heat]
+[Day 25 - Heat] <!-- heatmap of places - maybe something 3d? arctic buoys? -->
 
-[Day 26 - Map projections]
+[Day 26 - Map projections] <!-- orkney centre looking south -->
 
-[Day 27 - Micromapping]
+[Day 27 - Micromapping] <!-- an archaeological site? -->
 
-[Day 28 - The blue planet]
+[Day 28 - The blue planet] <!-- projection of pacific -->
 
-[Day 29 - Overture]
+[Day 29 - Overture] <!-- ??? -->
 
-[Day 30 - The final map]
+[Day 30 - The final map] <!-- another 3d one? archaeology? -->

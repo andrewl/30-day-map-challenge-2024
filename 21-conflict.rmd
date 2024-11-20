@@ -1,0 +1,79 @@
+---
+title: "21. Conflict - Hadrian's Wall Tube Map"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+### Hadrian's Wall
+
+Nothing says 'Conflict' like a the Roman Army. For nearly 300 years the Roman military from across the Empire
+were stationed on Hadrian's Wall in the North of Englang. The wall is over 70 miles long and probably served 
+a number of different purposes during that time.
+
+So, along the wall were a number of forts and milecastles. The milecastles were small forts that were placed every
+1200-1500 metres along the wall. They are about 20mx20m in size and usually guard a gate in the wall.
+
+For this map I've taken the locations of the milecastles from the amazing Pleiades project
+(https://pleiades.stoa.org/) and displayed them in a tube-map style. The horizontal spacing between the milecastles
+is proportional to the distance between them, although I've kept them on a straight horizontal line.
+
+The map is a little too large to see in detail on this page, but click on it to see the full image!
+
+```{r map, include=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+#First, we'll need to load a bunch of libraries so we can handle and view geospatial data
+library(sf)
+library(ggplot2)
+
+#Next, we'll load the data we need from the Pleiades project
+#This is a KML file that contains the locations of the milecastles
+#produced by running an advanced search on the Pleiades website - https://pleiades.stoa.org/
+milecastles <- st_read('./data/21/search.kml', quiet = TRUE)
+
+# Convert to British National Grid, so we can work in metres
+milecastles <- st_transform(milecastles, crs=27700)
+
+# Tidy the data
+# Remove any milecastles that are not actually milecastles (e.g. OSM boundaries)
+milecastles <- milecastles[!grepl("OSM", milecastles$Name, ignore.case = TRUE), ]
+milecastles <- milecastles[!grepl("boundary", milecastles$Name, ignore.case = TRUE), ]
+
+# Add a column for the x position of the milecastles and a constant y position
+milecastles$d <- st_coordinates(st_centroid(milecastles))[,1] 
+milecastles$e <- 50
+
+# Add a column for the milecastle name - we remove the "Milecastle (XX)" part of the name
+milecastles$n <- gsub(".*\\((.*)\\).*", "\\1", milecastles$Name)
+milecastles$n <- paste("   ", milecastles$n)
+
+# Plot the milecastles - using imperial purple, of course
+ggplot(milecastles, aes(x=d, y=e, label=n, background="white", color="purple")) +
+geom_line(color="purple", size=3) +
+geom_point(size = 3, shape = 21, color="black", fill = "transparent", stroke = 2) +
+geom_point(color = "white", size = 2) +
+geom_text(color="black", angle=90, hjust=0, vjust=0.5) +
+theme_void() + 
+theme(legend.position="none")
+
+# Save the image
+ggsave(file="images/milecastle-tube-map.png", width=28, height=5, dpi=360)
+```
+
+[![Alt text](images/milecastle-tube-map.png "Link title")](images/milecastle-tube-map.png)
+
+
+### Credits
+
+Data: [Pleiades](https://pleiades.stoa.org/) under CC-BY 3.0 license
