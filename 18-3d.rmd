@@ -104,18 +104,18 @@ base_map = snowdon_elevation_matrix %>%
   plot_3d(heightmap=snowdon_elevation_matrix, windowsize = c(1200,800), zscale=40)
 
 # Save the 3D map at various angles
-#angles= seq(0,360,length.out = 1441)[-1]
-#for(i in 1:1440) {
-#  render_camera(theta=-45+angles[i], phi=20, zoom=0.2,  fov=60)
+angles= seq(0,360,length.out = 1441)[-1]
+for(i in 1:1440) {
+  render_camera(theta=-45+angles[i], phi=20, zoom=0.2,  fov=60)
 
-#  render_snapshot(filename = sprintf("snowdon%i.png", i), 
-#                  title_text = "Snowdon routes",
-#                  title_bar_color = "#1f5214", title_color = "white", title_bar_alpha = 1)
-#}
-#rgl::rgl.close()
+  render_snapshot(filename = sprintf("snowdon%i.png", i),
+                  title_text = "Snowdon routes",
+                  title_bar_color = "#1f5214", title_color = "white", title_bar_alpha = 1)
+}
+rgl::rgl.close()
 
 # Create a video of the 3D map from the frames
-#system("ffmpeg -framerate 60 -i snowdon%d.png -pix_fmt yuv420p images/snowdon.mp4")
+system("ffmpeg -framerate 60 -i snowdon%d.png -pix_fmt yuv420p images/snowdon.mp4")
 ```
 
 ![](images/snowdon.mp4)
