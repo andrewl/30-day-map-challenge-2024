@@ -69,7 +69,7 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 27 - Micromapping](./27-micromapping.html) 
 
-[Day 28 - The blue planet](./28-the-blue-planet.html) 
+[Day 28 - The blue planet](./28-blue-planet.html) 
 
 [Day 29 - Overture](./29-overture.html) 
 

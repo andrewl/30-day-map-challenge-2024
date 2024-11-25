@@ -93,7 +93,7 @@ unique(b$id) %>% purrr::walk(function(this_id) {
 
 })
 
-system('ffmpeg -i /tmp/blue-planet-%d.png -framerate 30 -vcodec libx264 -f mp4 -vf scale="900:-1" -vb 1024k -preset slow images/blue-planet.mp4')
+system('ffmpeg -framerate 30 -i /tmp/blue-planet-%d.png -vf "crop=2100:1044:0:525,scale=900:430" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p images/blue-planet.mp4')
 
 ```
 
