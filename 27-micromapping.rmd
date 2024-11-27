@@ -1,0 +1,107 @@
+---
+title: "27. Micromapping"
+output:
+  rmarkdown::html_document:
+    code_folding: hide
+    theme: sandstone   
+    highlight: tango
+    css: "css/andrewl.css"
+    includes:
+      before_body: "partials/header.html"
+      after_body: "partials/footer.html"
+
+---
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Want to see the code? Click on the black boxes on the right to show/hide the code. 
+
+### A superficial map
+
+Here's an animation based on a dataset from the British Geological Survey. The height
+of each hexagon represents how deep below the surface the natural bedrock is. Geologists
+call this non-rock material 'superficial', and it's been laid down over the past
+2.5 million years or so.
+
+I've taken the area around the Bristol channel and animated the superficial
+layer falling away. It's a terrible map as it has no scale, north point, the animation
+is entirely gratuitous, and it's been rendered on an underpowered machine! But as usual
+the code can act as a starting point for building your own maps or exploring this
+data.
+
+Why's this under the micromapping category? Well despite covering a large area the 
+maximum depth of the Superficial layer on this map is just 20 metres or so - micro in
+comparison to the area.
+
+Like my previous 3D attempt, much credit goes to https://www.tylermw.com for his
+ggplot library and inspirational blog posts
+
+### The Map 
+
+```{r data, message=FALSE, warning=FALSE, results='show'}
+library(rayshader)
+library(sp)
+library(sf)
+library(ggplot2)
+library(paletteer)
+
+hex <- read_sf("./data/27/SDTM_HEX/Data/ESRI/BGS_SDTM_1km.shp")
+
+distance <- 50000
+
+box = c(xmin = 328337-distance, ymin = 172855-distance, xmax = 328337+distance, ymax = 172855+distance)
+sf::sf_use_s2(FALSE)
+a <- st_crop(hex, box)
+sf::sf_use_s2(TRUE)
+
+max_depth = max(a$BSTM_MEAN)
+
+p = paletteer_c("ggthemes::Blue-Green Sequential", n=max(a$BSTM_MEAN))
+
+for(i in 0:max(a$BSTM_MEAN)) {
+
+  a$depth = pmax(max_depth-i,max_depth-a$BSTM_MEAN)
+  #these ensure we have a consistent height scale across the frames
+  a$depth[0] = max_depth
+  a$depth[1] = 0
+
+m = ggplot(a) +
+  geom_sf(color = "white", aes(colour="white", fill = a$depth )) +
+  scale_fill_paletteer_binned("ggthemes::Brown", direction=-1, breaks=0:max(a$BSTM_MEAN)+1) +
+  theme_void()  +
+  theme(legend.position = "none", axis.line = element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(), panel.background = element_rect(fill = "white"), )
+
+plot_gg(m, scale = 50, height_aes = "fill", multicore = TRUE, windowsize = c(1200, 960),
+        fov = 75, zoom = 0.3, theta = 0+(i*2), phi = 30, invert=FALSE, shadow = TRUE, raytrace = TRUE, shadow_intensity=0.5, background="grey")
+
+render_snapshot(filename=sprintf("/tmp/depth-%d", i), clear = TRUE, software_render = TRUE)
+
+}
+
+for(i in 1:60) {
+
+  plot_gg(m, scale = 50, height_aes = "fill", multicore = TRUE, windowsize = c(1200, 960),
+        fov = 75, zoom = 0.3, theta = 0+(max(a$BSTM_MEAN)*2), phi = 30+i, invert=FALSE, shadow = TRUE, raytrace = TRUE, shadow_intensity=0.5, background="grey")
+
+  render_snapshot(filename=sprintf("/tmp/depth-%d", i+max(a$BSTM_MEAN)), clear = TRUE, software_render = TRUE)
+
+}
+
+
+# Create a video of the 3D map from the frames
+system("ffmpeg -y -framerate 15 -i /tmp/depth-%d.png -pix_fmt yuv420p images/micromapping.mp4")
+
+
+```
+
+
+```
+
+![](images/micromapping.mp4)
+
+
+### Credits
+
+Data: Superficial thickness 1 km hex grid by the British Geological Survey under OGL license from
+https://www.bgs.ac.uk/datasets/superficial-thickness-model-1-km-hex-grid/
