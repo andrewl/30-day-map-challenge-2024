@@ -75,7 +75,7 @@ m = ggplot(a) +
 plot_gg(m, scale = 50, height_aes = "fill", multicore = TRUE, windowsize = c(1200, 960),
         fov = 75, zoom = 0.3, theta = 0+(i*2), phi = 30, invert=FALSE, shadow = TRUE, raytrace = TRUE, shadow_intensity=0.5, background="grey")
 
-render_snapshot(filename=sprintf("/tmp/depth-%d", i), clear = TRUE, software_render = TRUE)
+render_highquality(filename=sprintf("/tmp/depth-%d", i), clear = TRUE)
 
 }
 
@@ -84,8 +84,7 @@ for(i in 1:60) {
   plot_gg(m, scale = 50, height_aes = "fill", multicore = TRUE, windowsize = c(1200, 960),
         fov = 75, zoom = 0.3, theta = 0+(max(a$BSTM_MEAN)*2), phi = 30+i, invert=FALSE, shadow = TRUE, raytrace = TRUE, shadow_intensity=0.5, background="grey")
 
-  render_snapshot(filename=sprintf("/tmp/depth-%d", i+max(a$BSTM_MEAN)), clear = TRUE, software_render = TRUE)
-
+  render_highquality(filename=sprintf("/tmp/depth-%d", i), clear = TRUE)
 }
 
 
