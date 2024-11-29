@@ -192,6 +192,9 @@ ggplot(aes=aes(x,y)) +
 
 
 
+
 ### Credits
 
-World Boundaries: WorldWind https://worldwind.arc.nasa.gov/
+Data: Overture Maps Foundation, overturemaps.org License for theme: ODbL
+© OpenStreetMap contributors. Available under the Open Database License.
+Data from TomTom.

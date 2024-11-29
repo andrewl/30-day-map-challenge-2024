@@ -73,5 +73,4 @@ Find out more about the [30 Day Map Challenge](https://30daymapchallenge.com/)
 
 [Day 29 - Overture](./29-overture.html) 
 
-[Day 30 - The final map](./30-the-final-map.html) 
-```
+[Day 30 - The final map](./30-final-map.html) 
